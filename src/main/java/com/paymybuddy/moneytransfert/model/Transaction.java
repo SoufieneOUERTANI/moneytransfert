@@ -16,7 +16,17 @@ import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @DynamicUpdate
 @Table(name="transaction")
@@ -50,7 +60,7 @@ public class Transaction {
 					}
 			)
 	@JoinColumn(name="account_id")
-	@Column(name="transaction_account_id")
+	//@Column(name="transaction_account_id")
 	private Account transactionAccountId;
 	
     @NotNull(message = "Transaction ammount cannot be null")
@@ -71,34 +81,37 @@ public class Transaction {
 	
 	@Column(name="destination_labbel")
 	private String destinationLabbel;
-	
 
-	@ManyToOne(
-			cascade = { 
-					CascadeType.PERSIST, 
-					CascadeType.MERGE 
-					}
-			)
-	@JoinColumn(name="account_id")
-	@Column(name="source_account")
-	private Account sourceAccount;
-	
-	@ManyToOne(
-			cascade = { 
-					CascadeType.PERSIST, 
-					CascadeType.MERGE 
-					}
-			)
-	@JoinColumn(name="account_id")
-	@Column(name="destination_account")
-	private Account destinationAccount;
+//	@ManyToOne(
+//			cascade = { 
+//					CascadeType.PERSIST, 
+//					CascadeType.MERGE 
+//					}
+//			)
+//	@JoinColumn(name="account_id")
+//	//@Column(name="source_account")
+//	private Account sourceAccount;
+//	
+//	@ManyToOne(
+//			cascade = { 
+//					CascadeType.PERSIST, 
+//					CascadeType.MERGE 
+//					}
+//			)
+//	@JoinColumn(name="account_id")
+//	//@Column(name="destination_account")
+//	private Account destinationAccount;
 
     @NotNull(message = "Transaction status cannot be null")
 	@Column(name="transaction_status")
-	private TransactionStatus  transactionStatus;
+	//private TransactionStatus  transactionStatus;
+	private String  transactionStatus;
+
 
     @NotNull(message = "Transaction type cannot be null")
 	@Column(name="transaction_type")
-	private TransactionType transactionType;
+	//private TransactionType transactionType;
+	private String transactionType;
+
 	
 }

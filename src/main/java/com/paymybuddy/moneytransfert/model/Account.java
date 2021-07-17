@@ -52,19 +52,19 @@ public class Account {
 			)
 	List<Transaction> transactions;
 	
-	@OneToMany(
-			mappedBy = "sourceAccount", 
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-			)
-	List<Transaction> sourceTransactions;
-	
-	
-	@OneToMany(
-			mappedBy = "destinationAccount", 
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-			)
-	List<Transaction> destinationTransactions;
+//	@OneToMany(
+//			mappedBy = "sourceAccount", 
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true
+//			)
+//	List<Transaction> sourceTransactions;
+//	
+//	@OneToMany(
+//			mappedBy = "destinationAccount", 
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true
+//			)
+
+//	List<Transaction> destinationTransactions;
 	
 }
