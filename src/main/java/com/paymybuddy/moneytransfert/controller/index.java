@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.paymybuddy.moneytransfert.service.TransactionService;
 
 @Controller
-public class TransactionController {
+public class index {
 
 	@Autowired
 	private TransactionService transactionService;
