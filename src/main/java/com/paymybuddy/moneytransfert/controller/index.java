@@ -2,6 +2,8 @@ package com.paymybuddy.moneytransfert.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import com.paymybuddy.moneytransfert.service.TransactionService;
 
 @Controller
 public class index {
+
+	private static final Logger logger = LogManager.getLogger("index");
 
 	@Autowired
 	private TransactionService transactionService;
@@ -30,14 +34,16 @@ public class index {
 	// display list of employees
 	@RequestMapping("/page/{pageNo}")
 	public String findPagineted(@PathVariable (value="pageNo") int pageNo, Model model ) {
-		int pageSize = 5;
+		int pageSize = 1;
 		Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize);
 		List<Transaction> listTransactions = page.getContent();
-		
+
+		logger.info("SOUE >>> page.getContent() : "+ page.getContent());
+
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("is at sufficient level.", listTransactions);
+		model.addAttribute("listTransactions", listTransactions);
 		return "transactions";
 	}
 	
