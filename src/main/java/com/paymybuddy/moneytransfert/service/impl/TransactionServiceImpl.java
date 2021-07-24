@@ -19,19 +19,19 @@ public class TransactionServiceImpl implements TransactionService {
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
-	public Iterable<Transaction> gettransactions() {
+	public Iterable<Transaction> getTransactions() {
 		return transactionRepository.findAll();
 	}
 	
-	public Optional<Transaction> gettransactionById(Integer id) {
+	public Optional<Transaction> getTransactionById(Integer id) {
 		return transactionRepository.findById(id);
 	}	
 	
-	public Transaction savetransaction(Transaction transaction) {
+	public Transaction saveTransaction(Transaction transaction) {
 		return transactionRepository.save(transaction);
 	}
 	
-	public void deletetransactionById(Integer id) {
+	public void deleteTransactionById(Integer id) {
 		transactionRepository.deleteById(id);
 	}
 

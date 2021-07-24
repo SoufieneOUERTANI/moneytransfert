@@ -45,12 +45,12 @@ public class Account {
     @Column(columnDefinition = "float default 0")
     float balance;
 	
-	@OneToMany(
-			mappedBy = "transactionAccountId", 
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-			)
-	List<Transaction> transactions;
+//	@OneToMany(
+//			mappedBy = "transactionAccountId",
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true
+//			)
+//	List<Transaction> transactions;
 	
 //	@OneToMany(
 //			mappedBy = "sourceAccount", 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Transaction Management System</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Transaction Management System</h1>
+    <hr>
+    <h2>Save Transaction</h2>
+
+    <form action="#" th:action="@{/saveTransaction}" th:object="${transaction}"
+          method="POST">
+
+        <!--    <input type="text" th:field="*{transactionId}"-->
+        <!--           placeholder="Transaction transactionId" class="form-control mb-4 col-4">-->
+        <input type="text" th:field="*{transactionDate}"
+               placeholder="Transaction transactionDate" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{transactionAccountId}"
+               placeholder="Transaction transactionAccountId" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{transactionAmount}"
+               placeholder="Transaction transactionAmount" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{previousBalance}"
+               placeholder="Transaction previousBalance" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{newBalance}"
+               placeholder="Transaction newBalance" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{sourceLabbel}"
+               placeholder="Transaction sourceLabbel" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{destinationLabbel}"
+               placeholder="Transaction destinationLabbel" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{transactionStatus}"
+               placeholder="Transaction transactionStatus" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{transactionType}"
+               placeholder="Transaction transactionType" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Save Transaction</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/}"> Back to Transaction List</a>
+</div>
+</body>
+</html>

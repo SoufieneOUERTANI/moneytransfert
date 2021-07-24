@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.paymybuddy.moneytransfert.model.Transaction;
 import com.paymybuddy.moneytransfert.service.TransactionService;
@@ -23,18 +21,18 @@ public class index {
 	@Autowired
 	private TransactionService transactionService;
 	
-	// display list of employees
+	// display list of transactions
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
-		//return(findPagineted(1, model));
-		model.addAttribute("listTransactions", transactionService.gettransactions());
-		return "index";
+		return(findPagineted(1, model));
+//		model.addAttribute("listTransactions", transactionService.getTransactions());
+//		return "index";
 	}
 	
-	// display list of employees
+	// display list of transactions
 	@RequestMapping("/page/{pageNo}")
 	public String findPagineted(@PathVariable (value="pageNo") int pageNo, Model model ) {
-		int pageSize = 1;
+		int pageSize = 3;
 		Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize);
 		List<Transaction> listTransactions = page.getContent();
 
@@ -46,5 +44,20 @@ public class index {
 		model.addAttribute("listTransactions", listTransactions);
 		return "transactions";
 	}
-	
+
+	@GetMapping("/showNewTransactionForm")
+	public String showNewTransactionForm(Model model) {
+		// create model attribute to bind form data
+		Transaction transaction = new Transaction();
+		model.addAttribute("transaction", transaction);
+		return "new_transaction";
+	}
+
+	@PostMapping("/saveTransaction")
+	public String saveTransaction(@ModelAttribute("transaction") Transaction transaction) {
+		// save transaction to database
+		logger.info("SOUE >>> transaction : "+transaction);
+		transactionService.saveTransaction(transaction);
+		return "redirect:/";
+	}
 }

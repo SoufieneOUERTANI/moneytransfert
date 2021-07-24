@@ -12,13 +12,13 @@ import com.paymybuddy.moneytransfert.repository.TransactionRepository;
 
 public interface TransactionService {
 	
-	public Iterable<Transaction> gettransactions();
+	public Iterable<Transaction> getTransactions();
 	
-	public Optional<Transaction> gettransactionById(Integer id);
+	public Optional<Transaction> getTransactionById(Integer id);
 	
-	public Transaction savetransaction(Transaction transaction);
+	public Transaction saveTransaction(Transaction transaction);
 	
-	public void deletetransactionById(Integer id);
+	public void deleteTransactionById(Integer id);
 	
 	public Page<Transaction> findPaginated(int pageNo, int page);
 

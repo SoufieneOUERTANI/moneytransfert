@@ -53,15 +53,15 @@ public class Transaction {
 	@Column(name="transaction_date")
 	private Date transactionDate;
 	
-	@ManyToOne(
-			cascade = { 
-					CascadeType.PERSIST, 
-					CascadeType.MERGE 
-					}
-			)
-	@JoinColumn(name="account_id")
-	//@Column(name="transaction_account_id")
-	private Account transactionAccountId;
+//	@ManyToOne(
+//			cascade = {
+//					CascadeType.PERSIST,
+//					CascadeType.MERGE
+//					}
+//			)
+//	@JoinColumn(name="account_id")
+//	//@Column(name="transaction_account_id")
+	private String transactionAccountId;
 	
     @NotNull(message = "Transaction ammount cannot be null")
     @Positive(message = "Transaction must be positive")
