@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @ToString
 @Getter
@@ -51,6 +52,7 @@ public class Transaction {
 	
     @NotNull(message = "Transaction date cannot be null")
 	@Column(name="transaction_date")
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	private Date transactionDate;
 	
 //	@ManyToOne(

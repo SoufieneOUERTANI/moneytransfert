@@ -1,6 +1,7 @@
 package com.paymybuddy.moneytransfert.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,5 +60,25 @@ public class index {
 		logger.info("SOUE >>> transaction : "+transaction);
 		transactionService.saveTransaction(transaction);
 		return "redirect:/";
+	}
+
+
+	@GetMapping("/deleteTransaction/{id}")
+	public String deleteTransaction(@PathVariable (value = "id") int id) {
+
+		// call delete transaction method
+		this.transactionService.deleteTransactionById(id);
+		return "redirect:/";
+	}
+
+	@GetMapping("/showFormForUpdate/{id}")
+	public String showFormForUpdate(@PathVariable ( value = "id") int id, Model model) {
+
+		// get transaction from the service
+		Optional<Transaction> transaction = transactionService.getTransactionById(id);
+
+		// set transaction as a model attribute to pre-populate the form
+		model.addAttribute("transaction", transaction);
+		return "update_transaction";
 	}
 }
