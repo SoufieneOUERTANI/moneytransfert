@@ -25,16 +25,19 @@ public class index {
 	// display list of transactions
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
-		return(findPagineted(1, model));
+		return(findPagineted(1, "transactionId", "desc", model));
 //		model.addAttribute("listTransactions", transactionService.getTransactions());
 //		return "index";
 	}
 	
 	// display list of transactions
 	@RequestMapping("/page/{pageNo}")
-	public String findPagineted(@PathVariable (value="pageNo") int pageNo, Model model ) {
+	public String findPagineted(@PathVariable (value="pageNo") int pageNo,
+								@RequestParam("sortField") String sortField,
+								@RequestParam("sortDir") String sortDir,
+								Model model ) {
 		int pageSize = 3;
-		Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize);
+		Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
 		List<Transaction> listTransactions = page.getContent();
 
 		logger.info("SOUE >>> page.getContent() : "+ page.getContent());
@@ -42,6 +45,11 @@ public class index {
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
+
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
 		model.addAttribute("listTransactions", listTransactions);
 		return "transactions";
 	}

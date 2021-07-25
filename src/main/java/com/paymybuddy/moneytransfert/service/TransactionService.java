@@ -20,6 +20,6 @@ public interface TransactionService {
 	
 	public void deleteTransactionById(Integer id);
 	
-	public Page<Transaction> findPaginated(int pageNo, int page);
+	public Page<Transaction> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 
 }
