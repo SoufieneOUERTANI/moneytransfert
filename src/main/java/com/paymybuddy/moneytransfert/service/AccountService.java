@@ -1,32 +1,30 @@
 package com.paymybuddy.moneytransfert.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
 
-public class AccountService {
 
-	@Autowired
-	private AccountRepository accountRepository;
+public interface AccountService {
 
-	public Iterable<Account> getAccounts() {
-		return accountRepository.findAll();
-	}
+	public Iterable<Account> getAccounts();
 
-	public Optional<Account> getAccountById(Integer id) {
-		return accountRepository.findById(id);
-	}	
+//	public Optional<Account> getAccountById(String id);
 
-	public Account saveAccount(Account Account) {
-		return accountRepository.save(Account);
-	}
+	public Account saveAccount(Account account);
 
-	public void deleteAccountById(Integer id) {
-		accountRepository.deleteById(id);
-	}
+//	public void deleteAccountById(Integer id);
+
+	public Page<Account> findPaginated(int pageNo, int page, String sortField, String sortDirection);
+
+	public Account getAccountByAccountEmailId(String accountEmailId);
+
+	public void deleteByAccountEmailId(String accountEmailId);
 
 }

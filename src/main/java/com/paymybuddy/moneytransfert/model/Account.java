@@ -11,20 +11,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @DynamicUpdate
 @Table(name="account")
 public class Account {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="account_id")
-	private int accountId;
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Last name cannot be null")
+	@Column(name="account_email_id")
+	@Email(message = "Email should be valid")
+	private String accountEmailId;
 	
     @NotNull(message = "Last name cannot be null")
 	@Column(name="last_name")
@@ -34,12 +42,13 @@ public class Account {
 	@Column(name="first_name")
 	private String firstName;
     
-    @NotNull(message = "First name cannot be null")
-    @Column
+    @NotNull(message = "Birthday cannot be null")
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
+	@Past(message = "Date de naissance doit être dans le passé")
+	@Column
 	private Date birthday;
 
 	@Column
-	@Past(message = "Date de naissance doit être dans le passé")
     private String adress;
     
     @Column(columnDefinition = "float default 0")
@@ -66,5 +75,53 @@ public class Account {
 //			)
 
 //	List<Transaction> destinationTransactions;
-	
+
+
+	public String getAccountEmailId() {
+		return accountEmailId;
+	}
+
+	public void setAccountEmailId(String accountEmailId) {
+		this.accountEmailId = accountEmailId;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
 }
