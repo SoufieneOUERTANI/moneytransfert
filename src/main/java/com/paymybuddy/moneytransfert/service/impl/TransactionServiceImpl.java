@@ -13,6 +13,8 @@ import com.paymybuddy.moneytransfert.model.Transaction;
 import com.paymybuddy.moneytransfert.repository.TransactionRepository;
 import com.paymybuddy.moneytransfert.service.TransactionService;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class TransactionServiceImpl implements TransactionService {

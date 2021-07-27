@@ -2,15 +2,7 @@ package com.paymybuddy.moneytransfert.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -54,18 +46,19 @@ public class Transaction {
 	@Column(name="transaction_date")
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	private Date transactionDate;
-	
-//	@ManyToOne(
-//			cascade = {
-//					CascadeType.PERSIST,
-//					CascadeType.MERGE
-//					}
-//			)
-//	@JoinColumn(name="account_id")
-//	//@Column(name="transaction_account_id")
-	private String transactionAccountId;
-	
-    @NotNull(message = "Transaction ammount cannot be null")
+
+	@ManyToOne(
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.DETACH,
+					CascadeType.REFRESH
+					}
+			)
+	@JoinColumn(name="transaction_account_email_id")
+	private Account accountEmailId;
+
+	@NotNull(message = "Transaction ammount cannot be null")
     @Positive(message = "Transaction must be positive")
 	@Column(name="transaction_amount")
 	private int transactionAmount;
@@ -115,5 +108,4 @@ public class Transaction {
 	//private TransactionType transactionType;
 	private String transactionType;
 
-	
 }

@@ -14,6 +14,8 @@ import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
 import com.paymybuddy.moneytransfert.service.AccountService;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {

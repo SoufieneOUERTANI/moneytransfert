@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="ISO-8859-1">
+  <title>moneytransfert</title>
+</head>
+<body>
+<div align=center>
+  <h1>Transactions list</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>transaction_id</th>
+      <th>transaction_date</th>
+      <th>transaction_account_id</th>
+      <th>transaction_amount</th>
+      <th>previous_balance</th>
+      <th>new_balance</th>
+      <th>source_labbel</th>
+      <th>destination_labbel</th>
+      <th>source_account</th>
+      <th>destination_account</th>
+      <th>transaction_status</th>
+      <th>transaction_type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="transaction : ${listTransactions}">
+      <td th:text="${transaction.transactionId}"></td>
+      <td th:text="${transaction.transactionDate}"></td>
+      <td th:text="${transaction.accountEmailId}"></td>
+      <td th:text="${transaction.transactionAmount}"></td>
+      <td th:text="${transaction.previousBalance}"></td>
+      <td th:text="${transaction.newBalance}"></td>
+      <td th:text="${transaction.sourceLabbel}"></td>
+      <td th:text="${transaction.destinationLabbel}"></td>
+      <!-- 					<td th:text="${transaction.sourceAccount}"></td> -->
+      <!-- 					<td th:text="${transaction.destinationAccount}"></td> -->
+      <td th:text="${transaction.transactionStatus}"></td>
+      <td th:text="${transaction.transactionType}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

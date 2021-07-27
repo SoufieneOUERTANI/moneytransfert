@@ -3,14 +3,7 @@ package com.paymybuddy.moneytransfert.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -20,7 +13,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@ToString
+//@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -55,13 +48,16 @@ public class Account {
     
     @Column(columnDefinition = "float default 0")
     float balance;
-	
-//	@OneToMany(
-//			mappedBy = "transactionAccountId",
-//			cascade = CascadeType.ALL,
-//			orphanRemoval = true
-//			)
-//	List<Transaction> transactions;
+
+	// To avoid infinite loop de @OneToMany => @ManyToOne => @OneToMany => ...
+	//@Transient .. But KO .. Because avoiding the cascade to be executed
+	@OneToMany(
+			fetch=FetchType.LAZY,
+			mappedBy = "accountEmailId",
+			cascade = CascadeType.ALL/*,
+			orphanRemoval = true*/
+			)
+	List<Transaction> transactions;
 	
 //	@OneToMany(
 //			mappedBy = "sourceAccount", 
@@ -78,4 +74,17 @@ public class Account {
 
 //	List<Transaction> destinationTransactions;
 
+
+	// override without the "List<Transaction> transactions" .. Else infinite loop
+	@Override
+	public String toString() {
+		return "Account{" +
+				"accountEmailId='" + accountEmailId + '\'' +
+				", lastName='" + lastName + '\'' +
+				", firstName='" + firstName + '\'' +
+				", birthday=" + birthday +
+				", adress='" + adress + '\'' +
+				", balance=" + balance +
+				'}';
+	}
 }
