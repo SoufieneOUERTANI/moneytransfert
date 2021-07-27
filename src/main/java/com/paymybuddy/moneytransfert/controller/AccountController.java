@@ -23,13 +23,13 @@ public class AccountController {
     private AccountService accountService;
 
     // display list of accounts
-    @RequestMapping("/account")
+    @GetMapping("/account")
     public String viewHomePage(Model model) {
         return(findPagineted(1, "accountEmailId", "desc", model));
     }
 
     // display list of accounts
-    @RequestMapping("/account/page/{pageNo}")
+    @GetMapping("/account/page/{pageNo}")
     public String findPagineted(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
@@ -63,7 +63,7 @@ public class AccountController {
     @PostMapping("/account/saveAccount")
     public String saveAccount(@ModelAttribute("account") Account account) {
         // save account to database
-        logger.info("SOUE >>> account : "+account);
+        // logger.info("SOUE >>> account : "+account);
         accountService.saveAccount(account);
         return "redirect:/account";
     }

@@ -23,13 +23,13 @@ public class TransactionController {
     private TransactionService transactionService;
 
     // display list of transactions
-    @RequestMapping("/transaction")
+    @GetMapping("/transaction")
     public String viewHomePage(Model model) {
         return(findPagineted(1, "transactionId", "desc", model));
     }
 
     // display list of transactions
-    @RequestMapping("/transaction/page/{pageNo}")
+    @GetMapping("/transaction/page/{pageNo}")
     public String findPagineted(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
@@ -38,7 +38,7 @@ public class TransactionController {
         Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Transaction> listTransactions = page.getContent();
 
-        logger.info("SOUE >>> page.getContent() : "+ page.getContent());
+        //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
