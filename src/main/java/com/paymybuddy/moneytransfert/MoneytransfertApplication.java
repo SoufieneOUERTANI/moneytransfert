@@ -16,8 +16,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @SpringBootApplication
-public class MoneytransfertApplication implements CommandLineRunner {
+public class MoneytransfertApplication
+/*
+		implements CommandLineRunner
+*/
+{
 
+/*
 	static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 	@Autowired
@@ -28,6 +33,7 @@ public class MoneytransfertApplication implements CommandLineRunner {
 
 	@Autowired
 	TransactionRepository transactionRepository;
+*/
 
 	public static void main(String[] args)
 	//		throws ParseException
@@ -38,7 +44,7 @@ public class MoneytransfertApplication implements CommandLineRunner {
 //		clientRepository_2.save(new Client("soufiene_Mail@gmail.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),""));
 	}
 
-	@Override
+/*	@Override
 	public void run(String... args) throws Exception {
 		Client cl2 = clientRepository.save(new Client("soufiene_Mail@gmail_2.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),""));
 		Client cl3 = clientRepository.save(new Client("soufiene_Mail@gmail_3.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),""));
@@ -52,5 +58,5 @@ public class MoneytransfertApplication implements CommandLineRunner {
 		Transaction transaction2 = transactionRepository.save(new Versement(accout2,50,"Ver"));
 		Transaction transaction3 = transactionRepository.save(new Virement(accout3,50,"Vir"));
 		Transaction transaction4 = transactionRepository.save(new Virement(accout3,50,"Vir"));
-	}
+	}*/
 }

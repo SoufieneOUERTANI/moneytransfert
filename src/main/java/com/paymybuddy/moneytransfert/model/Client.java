@@ -50,8 +50,9 @@ public class Client {
     @OneToMany(
             fetch=FetchType.LAZY,
             mappedBy = "client",
-            cascade = CascadeType.ALL,
-			orphanRemoval = true
+            cascade = CascadeType.ALL
+/*            ,
+			orphanRemoval = true*/
     )
     List<Account> accounts;
 
