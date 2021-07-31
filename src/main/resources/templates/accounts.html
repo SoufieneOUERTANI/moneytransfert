@@ -23,7 +23,7 @@
     <thead>
     <tr>
       <th>
-        <a th:href="@{'/account/page/' + ${currentPage} + '?sortField=accountEmailId&sortDir=' + ${reverseSortDir}}">
+        <a th:href="@{'/account/page/' + ${currentPage} + '?sortField=accountId&sortDir=' + ${reverseSortDir}}">
           accountId</a>
       </th>
       <th>
@@ -52,14 +52,14 @@
     </thead>
     <tbody>
     <tr th:each="account : ${listAccounts}">
-      <td th:text="${account.accountEmailId}"></td>
+      <td th:text="${account.accountId}"></td>
       <td th:text="${account.lastName}"></td>
       <td th:text="${account.firstName}"></td>
       <td th:text="${account.birthday}"></td>
       <td th:text="${account.adress}"></td>
       <td th:text="${account.balance}"></td>
-      <td><a th:href="@{/account/showFormForUpdate/{id}(id=${account.accountEmailId})}" class="btn btn-primary">Update</a>
-        <a th:href="@{/account/deleteAccount/{id}(id=${account.accountEmailId})}" class="btn btn-danger">Delete</a>
+      <td><a th:href="@{/account/showFormForUpdate/{id}(id=${account.accountId})}" class="btn btn-primary">Update</a>
+        <a th:href="@{/account/deleteAccount/{id}(id=${account.accountId})}" class="btn btn-danger">Delete</a>
       </td>
     </tr>
     </tbody>

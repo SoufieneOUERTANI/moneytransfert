@@ -98,11 +98,11 @@
 
 
                 <div class="col-md-3 mb-3 col-3">
-                    <select id="accountEmailId" required th:field="*{accountEmailId}">
+                    <select id="accountId" required th:field="*{accountId}">
                         <option hidden value="">Select an Account</option>
                         <option th:each="account : ${listAccounts}"
-                                th:text="${account.accountEmailId}"
-                                th:value="${account.accountEmailId}">
+                                th:text="${account.accountId}"
+                                th:value="${account.accountId}">
                         </option>
                     </select>
                 </div>
@@ -145,7 +145,7 @@
             <!--                    transactionDate</a>-->
             <!--            </th>-->
             <th>
-                <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=accountEmailId.firstName&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=accountId.firstName&sortDir=' + ${reverseSortDir}}">
                     First name</a>
             </th>
             <th>
@@ -184,7 +184,7 @@
         <tr th:each="transaction : ${listTransactions}">
             <!--            <td th:text="${transaction.transactionId}"></td>-->
             <!--            <td th:text="${transaction.transactionDate}"></td>-->
-            <td th:text="${transaction.accountEmailId.firstName}"></td>
+            <td th:text="${transaction.accountId.firstName}"></td>
             <td th:text="${transaction.transactionAmount}"></td>
             <!--            <td th:text="${transaction.previousBalance}"></td>-->
             <!--            <td th:text="${transaction.newBalance}"></td>-->

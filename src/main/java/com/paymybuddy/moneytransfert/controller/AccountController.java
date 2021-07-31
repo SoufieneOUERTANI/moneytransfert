@@ -25,7 +25,7 @@ public class AccountController {
     // display list of accounts
     @GetMapping("/account")
     public String viewHomePage(Model model) {
-        return(findPagineted(1, "accountEmailId", "desc", model));
+        return(findPagineted(1, "accountId", "desc", model));
     }
 
     // display list of accounts
@@ -73,7 +73,7 @@ public class AccountController {
     public String deleteAccount(@PathVariable (value = "id") String id) {
 
         // call delete account method
-        this.accountService.deleteByAccountEmailId(id);
+        this.accountService.deleteByAccountId(id);
         return "redirect:/account";
     }
 
@@ -81,7 +81,7 @@ public class AccountController {
     public String showFormForUpdate(@PathVariable ( value = "id") String id, Model model) {
 
         // get account from the service
-        Account account = accountService.getAccountByAccountEmailId(id);
+        Account account = accountService.getAccountByAccountId(id);
 
         // set account as a model attribute to pre-populate the form
         model.addAttribute("account", account);

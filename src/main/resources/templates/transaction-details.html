@@ -66,7 +66,7 @@
     <tr th:each="transaction : ${listTransactions}">
       <td th:text="${transaction.transactionId}"></td>
       <td th:text="${transaction.transactionDate}"></td>
-      <td th:text="${transaction.accountEmailId.accountEmailId}"></td>
+      <td th:text="${transaction.accountId.accountId}"></td>
       <td th:text="${transaction.transactionAmount}"></td>
 <!--      <td th:text="${transaction.previousBalance}"></td>-->
 <!--      <td th:text="${transaction.newBalance}"></td>-->

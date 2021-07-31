@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
-    // Derived queries on accountEmailId
-    public Account findByAccountEmailId(String accountEmailId);
-    public void deleteByAccountEmailId(String accountEmailId);
+    // Derived queries on accountId
+    public Account findByAccountId(String accountId);
+    public void deleteByAccountId(String accountId);
 }

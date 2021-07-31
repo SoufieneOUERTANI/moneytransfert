@@ -20,12 +20,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ToString
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name="transaction")
-public class Transaction {
+//@Table(name="transaction")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="transaction_type", discriminatorType = DiscriminatorType.STRING,length = 1)
+public abstract class Transaction {
 	
 	enum TransactionStatus {
 		AUTHORISED,
@@ -50,19 +52,20 @@ public class Transaction {
 	@CreationTimestamp
 	private Date transactionDate;
 
-	@ManyToOne(
-			cascade = {
-					CascadeType.PERSIST,
-					CascadeType.MERGE,
-					CascadeType.DETACH,
-					CascadeType.REFRESH
-					}
-			)
-	@JoinColumn(name="transaction_account_email_id")
+	@ManyToOne
+//			(
+//			cascade = {
+//					CascadeType.PERSIST,
+//					CascadeType.MERGE,
+//					CascadeType.DETACH,
+//					CascadeType.REFRESH
+//					}
+//			)
+	@JoinColumn(name="account_id")
 	@NotNull
-	private Account accountEmailId;
+	private Account account;
 
-	@NotNull(message = "Transaction ammount cannot be null")
+	@NotNull(message = "Transaction amount cannot be null")
     //@Positive(message = "Transaction must be positive")
 	@Column(name="transaction_amount")
 	private int transactionAmount;
@@ -103,23 +106,29 @@ public class Transaction {
 
     //@NotNull(message = "Transaction status cannot be null")
 	@Column(name="transaction_status")
-	@ColumnDefault("validated_")
 	//private TransactionStatus  transactionStatus;
 	private String  transactionStatus;
 
 
     //@NotNull(message = "Transaction type cannot be null")
 	//private TransactionType transactionType;
-	@Column(name="transaction_type")
-	private String transactionType;
+
+	// On l'a remplacé par  @@DiscriminatorColumn
+//	@Column(name="transaction_type")
+//	private String transactionType;
 
 	@PrePersist
 	public void prePersist() {
-		if(transactionType == null) //We set default value in case if the value is not set yet.
-			transactionType = "Default_Type";
+//		if(transactionType == null) //We set default value in case if the value is not set yet.
+//			transactionType = "Default_Type";
 
 		if(transactionStatus == null) //We set default value in case if the value is not set yet.
 			transactionStatus = "Default_Status";
 	}
 
+	public Transaction(Account account, int transactionAmount, String sourceLabbel) {
+		this.account = account;
+		this.transactionAmount = transactionAmount;
+		this.sourceLabbel = sourceLabbel;
+	}
 }

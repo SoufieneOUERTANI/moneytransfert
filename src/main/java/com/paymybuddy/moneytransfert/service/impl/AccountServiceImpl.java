@@ -30,8 +30,8 @@ public class AccountServiceImpl implements AccountService {
 //        return accountRepository.findById(id);
 //    }
 
-    public Account getAccountByAccountEmailId(String accountEmailId){
-        return accountRepository.findByAccountEmailId(accountEmailId);
+    public Account getAccountByAccountId(String accountId){
+        return accountRepository.findByAccountId(accountId);
     }
 
 
@@ -43,8 +43,8 @@ public class AccountServiceImpl implements AccountService {
 //        accountRepository.deleteById(id);
 //    }
 
-    public void deleteByAccountEmailId(String accountEmailId) {
-        accountRepository.deleteById(accountEmailId);
+    public void deleteByAccountId(String accountId) {
+        accountRepository.deleteById(accountId);
     }
 
     //Pagination

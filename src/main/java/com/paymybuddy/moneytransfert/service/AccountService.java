@@ -23,8 +23,8 @@ public interface AccountService {
 
 	public Page<Account> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 
-	public Account getAccountByAccountEmailId(String accountEmailId);
+	public Account getAccountByAccountId(String accountId);
 
-	public void deleteByAccountEmailId(String accountEmailId);
+	public void deleteByAccountId(String accountId);
 
 }

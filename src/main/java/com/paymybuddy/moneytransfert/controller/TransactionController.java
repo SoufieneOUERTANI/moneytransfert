@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.paymybuddy.moneytransfert.model.Account;
+import com.paymybuddy.moneytransfert.model.Versement;
 import com.paymybuddy.moneytransfert.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,7 +75,8 @@ public class TransactionController {
     @GetMapping("/transaction/showNewTransactionForm")
     public String showNewTransactionForm(Model model) {
         // create model attribute to bind form data
-        Transaction transaction = new Transaction();
+        // SOUE >>>
+        Transaction transaction = new Versement();
         model.addAttribute("transaction", transaction);
         return "transaction_new";
     }

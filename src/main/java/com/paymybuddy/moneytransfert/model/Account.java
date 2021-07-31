@@ -6,45 +6,44 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 //@ToString
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
 @Table(name="account")
 public class Account {
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull(message = "Last name cannot be null")
-	@Column(name="account_email_id")
+	@Column(name="account_id")
 	@Email(message = "Email should be valid")
-	private String accountEmailId;
-	
-    @NotNull(message = "Last name cannot be null")
-	@Column(name="last_name")
-	private String lastName;
-	
-    @NotNull(message = "First name cannot be null")
-	@Column(name="first_name")
-	private String firstName;
-    
-    @NotNull(message = "Birthday cannot be null")
-	@DateTimeFormat(pattern ="yyyy-MM-dd")
-	@Past(message = "Date de naissance doit être dans le passé")
-	@Column
-	private Date birthday;
+	private String accountId;
 
-	@Column
-    private String adress;
+	@ManyToOne
+//			(
+//			cascade = {
+//					CascadeType.PERSIST,
+//					CascadeType.MERGE,
+//					CascadeType.DETACH,
+//					CascadeType.REFRESH
+//			}
+//	)
+	@JoinColumn(name="client_mail")
+	@NotNull
+	Client client;
+
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
+	@CreationTimestamp
+	@Column(name="creation_date")
+	Date creationDate;
     
     @Column(columnDefinition = "float default 0")
     float balance;
@@ -53,10 +52,11 @@ public class Account {
 	//@Transient .. But KO .. Because avoiding the cascade to be executed
 	@OneToMany(
 			fetch=FetchType.LAZY,
-			mappedBy = "accountEmailId",
-			cascade = CascadeType.ALL/*,
+			mappedBy = "account",
+			cascade = CascadeType.ALL
+			/*,
 			orphanRemoval = true*/
-			)
+	)
 	List<Transaction> transactions;
 	
 //	@OneToMany(
@@ -79,12 +79,16 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account{" +
-				"accountEmailId='" + accountEmailId + '\'' +
-				", lastName='" + lastName + '\'' +
-				", firstName='" + firstName + '\'' +
-				", birthday=" + birthday +
-				", adress='" + adress + '\'' +
+				"accountId='" + accountId + '\'' +
+				", client=" + client +
+				", creationDate=" + creationDate +
 				", balance=" + balance +
 				'}';
+	}
+
+	public Account(String accountId, float balance, Client client) {
+		this.accountId = accountId;
+		this.balance = balance;
+		this.client = client;
 	}
 }
