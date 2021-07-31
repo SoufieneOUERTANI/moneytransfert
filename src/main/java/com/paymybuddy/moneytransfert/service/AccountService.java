@@ -13,7 +13,7 @@ import com.paymybuddy.moneytransfert.repository.AccountRepository;
 
 public interface AccountService {
 
-	public Iterable<Account> getAccounts();
+	public List<Account> getAccounts();
 
 //	public Optional<Account> getAccountById(String id);
 

@@ -3,12 +3,15 @@ package com.paymybuddy.moneytransfert.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.paymybuddy.moneytransfert.model.Account;
+import com.paymybuddy.moneytransfert.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.paymybuddy.moneytransfert.model.Transaction;
@@ -22,9 +25,18 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @Autowired
+    private AccountService accountService;
+
+    // display list of transactions
+    @GetMapping("/")
+    public String homePage(Model model) {
+        return "redirect:/transaction";
+    }
+
     // display list of transactions
     @GetMapping("/transaction")
-    public String viewHomePage(Model model) {
+    public String viewHomePage(Model model, @ModelAttribute("transaction") Transaction transaction) {
         return(findPagineted(1, "transactionId", "desc", model));
     }
 
@@ -38,6 +50,8 @@ public class TransactionController {
         Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Transaction> listTransactions = page.getContent();
 
+        List<Account> listAccounts = accountService.getAccounts();
+
         //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
 
         model.addAttribute("currentPage", pageNo);
@@ -49,6 +63,10 @@ public class TransactionController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listTransactions", listTransactions);
+        model.addAttribute("listAccounts", listAccounts);
+
+
+
         return "transactions";
     }
 
@@ -60,10 +78,10 @@ public class TransactionController {
         return "transaction_new";
     }
 
+
     @PostMapping("/transaction/saveTransaction")
-    public String saveTransaction(@ModelAttribute("transaction") Transaction transaction) {
-        // save transaction to database
-        logger.info("SOUE >>> transaction : "+transaction);
+    public String saveTransaction(@ModelAttribute("transaction") Transaction transaction){
+        logger.info("SOUE2 >>> transaction : " + transaction);
         transactionService.saveTransaction(transaction);
         return "redirect:/transaction";
     }
@@ -86,5 +104,38 @@ public class TransactionController {
         // set transaction as a model attribute to pre-populate the form
         model.addAttribute("transaction", transaction);
         return "transaction_update";
+    }
+
+    @GetMapping("/transaction-details")
+    public String showTransactionsdetails( Model model) {
+        return(findPagineted_details(1, "transactionId", "desc", model));
+    }
+
+    // display list of transactions
+    @GetMapping("/transaction-details/page/{pageNo}")
+    public String findPagineted_details(@PathVariable (value="pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model ) {
+        int pageSize = 3;
+        Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Transaction> listTransactions = page.getContent();
+
+        List<Account> listAccounts = accountService.getAccounts();
+
+        //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listTransactions", listTransactions);
+        model.addAttribute("listAccounts", listAccounts);
+
+        return "transaction-details";
     }
 }

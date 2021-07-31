@@ -13,17 +13,16 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
 import com.paymybuddy.moneytransfert.service.AccountService;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-
-
+@Transactional
 @Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
 
-    public Iterable<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return accountRepository.findAll();
     }
 
