@@ -37,7 +37,7 @@ public class TransactionController {
     // display list of transactions
     @GetMapping("/transaction")
     public String viewHomePage(Model model, @ModelAttribute("transaction") Transaction transaction) {
-        return(findPagineted(1, "transactionId", "desc", model));
+        return(findPagineted(1, "transactionId", "desc", model, transaction));
     }
 
     // display list of transactions
@@ -45,7 +45,8 @@ public class TransactionController {
     public String findPagineted(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
-                                Model model ) {
+                                Model model,
+                                @ModelAttribute("transaction") Transaction transaction ) {
         int pageSize = 3;
         Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Transaction> listTransactions = page.getContent();
