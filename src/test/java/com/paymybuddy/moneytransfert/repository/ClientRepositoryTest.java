@@ -46,8 +46,8 @@ class ClientRepositoryTest {
     @Order(2)
     void save() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Client cl2 = clientRepository.save(new Client("soufiene_Mail@gmail_12.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),""));
-        Client cl = new Client("soufiene_Mail@gmail_13.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),"");
+        Client cl2 = clientRepository.save(new Client("soufiene_Mail@gmail_32.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),""));
+        Client cl = new Client("soufiene_Mail@gmail_33.com", "OUERTANI","Soufiene", new Date(dateFormat.parse("13-01-2006").getTime()),"");
         Client cl3 = clientRepository.save(cl);
         assertNotNull(cl2);
         Assertions.assertThat(cl3).usingRecursiveComparison().ignoringFields("clientMail").isEqualTo(cl);

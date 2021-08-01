@@ -38,6 +38,7 @@ public class Client {
 
     @NotNull(message = "Birthday cannot be null")
     @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Past(message = "Date de naissance doit être dans le passé")
     @Column
     private Date birthday;

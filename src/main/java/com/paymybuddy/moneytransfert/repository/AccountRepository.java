@@ -11,5 +11,4 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, String> {
     // Derived queries on accountId
     public Account findByAccountId(String accountId);
-    public void deleteByAccountId(String accountId);
 }

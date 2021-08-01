@@ -30,17 +30,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class Transaction {
 	
 	enum TransactionStatus {
+		Default_Status,
 		AUTHORISED,
 		PROCESSING,
 		REFUSED
 	}
-	
-	enum TransactionType {
-		REMITTANCE,
-		INTERNAL_TRANSFER,
-		EXTERNAL_TRANSFER,
-	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="transaction_id")
@@ -107,7 +102,8 @@ public abstract class Transaction {
     //@NotNull(message = "Transaction status cannot be null")
 	@Column(name="transaction_status")
 	//private TransactionStatus  transactionStatus;
-	private String  transactionStatus;
+	@Enumerated(EnumType.STRING)
+	private TransactionStatus  transactionStatus;
 
 
     //@NotNull(message = "Transaction type cannot be null")
@@ -123,7 +119,7 @@ public abstract class Transaction {
 //			transactionType = "Default_Type";
 
 		if(transactionStatus == null) //We set default value in case if the value is not set yet.
-			transactionStatus = "Default_Status";
+			transactionStatus = TransactionStatus.Default_Status;
 	}
 
 	public Transaction(Account account, int transactionAmount, String sourceLabbel) {
