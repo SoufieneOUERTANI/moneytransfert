@@ -11,20 +11,18 @@ import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
 
 
-public interface AccountService {
+public interface IAccountService {
 
 	public List<Account> getAccounts();
 
-//	public Optional<Account> getAccountById(String id);
+	public Account getAccountByAccountId(String accountId);
 
 	public Account saveAccount(Account account);
 
-//	public void deleteAccountById(Integer id);
+	public void deleteByAccountId(String accountId);
 
 	public Page<Account> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 
-	public Account getAccountByAccountId(String accountId);
 
-	public void deleteByAccountId(String accountId);
 
 }

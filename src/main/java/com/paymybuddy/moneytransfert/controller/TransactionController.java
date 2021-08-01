@@ -5,18 +5,17 @@ import java.util.Optional;
 
 import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.model.Versement;
-import com.paymybuddy.moneytransfert.service.AccountService;
+import com.paymybuddy.moneytransfert.service.IAccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.paymybuddy.moneytransfert.model.Transaction;
-import com.paymybuddy.moneytransfert.service.TransactionService;
+import com.paymybuddy.moneytransfert.service.ITransactionService;
 
 @Controller
 public class TransactionController {
@@ -24,10 +23,10 @@ public class TransactionController {
     private static final Logger logger = LogManager.getLogger("index");
 
     @Autowired
-    private TransactionService transactionService;
+    private ITransactionService transactionService;
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     // display list of transactions
     @GetMapping("/")

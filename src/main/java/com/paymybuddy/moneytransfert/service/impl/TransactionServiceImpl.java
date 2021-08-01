@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.moneytransfert.model.Transaction;
 import com.paymybuddy.moneytransfert.repository.TransactionRepository;
-import com.paymybuddy.moneytransfert.service.TransactionService;
+import com.paymybuddy.moneytransfert.service.ITransactionService;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
-public class TransactionServiceImpl implements TransactionService {
+public class TransactionServiceImpl implements ITransactionService {
 	
 	@Autowired
 	private TransactionRepository transactionRepository;

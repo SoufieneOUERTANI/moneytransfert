@@ -1,7 +1,6 @@
 package com.paymybuddy.moneytransfert.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.paymybuddy.moneytransfert.model.Account;
-import com.paymybuddy.moneytransfert.service.AccountService;
+import com.paymybuddy.moneytransfert.service.IAccountService;
 
 @Controller
 public class AccountController {
@@ -20,7 +19,7 @@ public class AccountController {
     private static final Logger logger = LogManager.getLogger("index");
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     // display list of accounts
     @GetMapping("/account")

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
-import com.paymybuddy.moneytransfert.service.AccountService;
+import com.paymybuddy.moneytransfert.service.IAccountService;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements com.paymybuddy.moneytransfert.service.IAccountService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -26,22 +26,11 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll();
     }
 
-//    public Optional<Account> getAccountById(String id) {
-//        return accountRepository.findById(id);
-//    }
-
-    public Account getAccountByAccountId(String accountId){
-        return accountRepository.findByAccountId(accountId);
-    }
-
+    public Account getAccountByAccountId(String accountId){ return accountRepository.findByAccountId(accountId); }
 
     public Account saveAccount(Account account) {
         return accountRepository.save(account);
     }
-
-//    public void deleteAccountById(Integer id) {
-//        accountRepository.deleteById(id);
-//    }
 
     public void deleteByAccountId(String accountId) {
         accountRepository.deleteById(accountId);

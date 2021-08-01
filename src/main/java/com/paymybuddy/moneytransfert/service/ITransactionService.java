@@ -10,7 +10,7 @@ import com.paymybuddy.moneytransfert.model.Transaction;
 import com.paymybuddy.moneytransfert.repository.TransactionRepository;
 
 
-public interface TransactionService {
+public interface ITransactionService {
 	
 	public Iterable<Transaction> getTransactions();
 	
