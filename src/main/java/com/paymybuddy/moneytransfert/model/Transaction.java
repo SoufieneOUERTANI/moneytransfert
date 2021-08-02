@@ -45,6 +45,7 @@ public abstract class Transaction {
 	@Column(name="transaction_date")
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	@CreationTimestamp
+	// LocalDateTime
 	private Date transactionDate;
 
 	@ManyToOne
@@ -60,10 +61,9 @@ public abstract class Transaction {
 	@NotNull
 	private Account account;
 
-	@NotNull(message = "Transaction amount cannot be null")
-    //@Positive(message = "Transaction must be positive")
+	//@Positive(message = "Transaction must be positive")
 	@Column(name="transaction_amount")
-	private int transactionAmount;
+	private float transactionAmount;
     
 //    @NotNull
 //	@Column(name="previous_balance")
@@ -122,7 +122,7 @@ public abstract class Transaction {
 			transactionStatus = TransactionStatus.Default_Status;
 	}
 
-	public Transaction(Account account, int transactionAmount, String sourceLabbel) {
+	public Transaction(Account account, float transactionAmount, String sourceLabbel) {
 		this.account = account;
 		this.transactionAmount = transactionAmount;
 		this.sourceLabbel = sourceLabbel;

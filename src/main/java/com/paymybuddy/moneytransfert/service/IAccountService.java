@@ -23,6 +23,4 @@ public interface IAccountService {
 
 	public Page<Account> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 
-
-
 }

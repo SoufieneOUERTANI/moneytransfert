@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("+")
 public class Versement extends Transaction{
-    public Versement(Account account, int transactionAmount, String sourceLabbel) {
+    public Versement(Account account, float transactionAmount, String sourceLabbel) {
         super(account, transactionAmount, sourceLabbel);
     }
 }

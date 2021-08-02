@@ -18,6 +18,4 @@ public interface IClientService {
 
 	public Page<Client> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 
-
-
 }

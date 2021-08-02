@@ -4,6 +4,7 @@ import com.paymybuddy.moneytransfert.model.*;
 import com.paymybuddy.moneytransfert.repository.AccountRepository;
 import com.paymybuddy.moneytransfert.repository.ClientRepository;
 import com.paymybuddy.moneytransfert.repository.TransactionRepository;
+import com.paymybuddy.moneytransfert.service.IBanckServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,6 +34,9 @@ public class MoneytransfertApplication
 	@Autowired
 	TransactionRepository transactionRepository;
 
+	@Autowired
+	IBanckServices banckServices;
+
 	public static void main(String[] args)
 
 			throws ParseException
@@ -58,9 +62,19 @@ public class MoneytransfertApplication
 		Account accout4 = accountRepository.save(new Account("soufiene_Mail@gmail_4.com_1",400, cl4));
 		Account accout5 = accountRepository.save(new Account("soufiene_Mail@gmail_5.com_1",400, cl4));
 
-		Transaction transaction2 = transactionRepository.save(new Versement(accout2,50,"Ver"));
-		Transaction transaction3 = transactionRepository.save(new Virement(accout3,50,"Vir"));
-		Transaction transaction4 = transactionRepository.save(new Virement(accout3,50,"Vir"));
+		transactionRepository.save(new Versement(accout2,50,"Ver"));
+		transactionRepository.save(new Retrait(accout3,50,"Vir"));
+		transactionRepository.save(new Retrait(accout3,50,"Vir"));
+
+		System.out.println(banckServices.consult("soufiene_Mail@gmail_5.com_1"));
+
+		banckServices.verser("soufiene_Mail@gmail_2.com_1",50, "Versement initial");
+		banckServices.retirer("soufiene_Mail@gmail_2.com_1",50, "Versement initial");
+
+		banckServices.virer("soufiene_Mail@gmail_2.com_1", "soufiene_Mail@gmail_3.com_1", 50, "Versement initial");
+
+		//System.out.println(banckServices.listTransactions("soufiene_Mail@gmail_3.com_1", 1, 3,"transactionDate" ,"ASC"));
+
 	}
 
 }

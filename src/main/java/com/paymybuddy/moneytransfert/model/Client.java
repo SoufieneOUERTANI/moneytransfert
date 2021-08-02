@@ -41,6 +41,7 @@ public class Client {
     @Temporal(TemporalType.DATE)
     @Past(message = "Date de naissance doit être dans le passé")
     @Column
+    // LocalDate
     private Date birthday;
 
     @Column
