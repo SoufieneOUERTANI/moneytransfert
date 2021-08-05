@@ -99,8 +99,8 @@ public class AccountController {
         if(accountMail.substring(0,5).equals("null,"))
             accountMail = accountMail.substring(5);*/
 
-
         Client client = clientService.getClientByClientMail(account.getClientMail());
+        account = accountService.getAccountByAccountId(account.getAccountId());
         if(client == null){
             throw new RuntimeException("No client for this mail");
         }

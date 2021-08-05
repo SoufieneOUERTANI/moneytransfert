@@ -16,18 +16,15 @@
 
     <form action="#" th:action="@{/account/updateAccount}" th:object="${account}"
           method="POST">
-        <input type="hidden" th:field="*{creationDate}" />
-        <input type="hidden" th:field="*{balance}" />
 
         <label> Account ID </label>
         <input type="text" th:field="*{accountId}"
-               placeholder="Account Mail" class="form-control mb-4 col-4"
-               th:readonly="true"
-        >
+               class="form-control mb-4 col-4"
+               th:readonly="true">
 
         <label> Client </label>
         <input type="text" th:field="*{clientMail}"
-               placeholder="Account Mail" class="form-control mb-4 col-4">
+               class="form-control mb-4 col-4">
 
         <button type="submit" class="btn btn-info col-2"> Update Account</button>
     </form>
