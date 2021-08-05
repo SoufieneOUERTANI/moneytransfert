@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="ISO-8859-1">
-  <title>Account Management System</title>
+    <meta charset="ISO-8859-1">
+    <title>Account Management System</title>
 
-  <link rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-  <h1>Account Management System</h1>
-  <hr>
-  <h2>Update Account</h2>
+    <h1>Account Management System</h1>
+    <hr>
+    <h2>Update Account</h2>
 
-  <form action="#" th:action="@{/account/saveAccount}" th:object="${account}"
-        method="POST">
 
-    <!-- Add hidden form field to handle update -->
-    <input type="hidden" th:field="*{accountId}" />
-<!--    <input type="disabled" th:field="*{accountId}" />-->
+    <form action="#" th:action="@{/account/updateAccount}" th:object="${account}"
+          method="POST">
+        <input type="hidden" th:field="*{creationDate}" />
+        <input type="hidden" th:field="*{balance}" />
 
-    <input type="text" th:field="*{lastName}" class="form-control mb-4 col-4 ">
-    <input type="text" th:field="*{firstName}" class="form-control mb-4 col-4">
-    <input type="text" th:field="*{birthday}" class="form-control mb-4 col-4">
-    <input type="text" th:field="*{adress}" class="form-control mb-4 col-4">
-    <input type="text" th:field="*{balance}" class="form-control mb-4 col-4">
+        <label> Account ID </label>
+        <input type="text" th:field="*{accountId}"
+               placeholder="Account Mail" class="form-control mb-4 col-4"
+               th:readonly="true"
+        >
 
-    <button type="submit" class="btn btn-info col-2"> Update Account</button>
-  </form>
+        <label> Client </label>
+        <input type="text" th:field="*{clientMail}"
+               placeholder="Account Mail" class="form-control mb-4 col-4">
 
-  <hr>
+        <button type="submit" class="btn btn-info col-2"> Update Account</button>
+    </form>
 
-  <a th:href = "@{/}"> Back to Account List</a>
+    <hr>
+
+    <a th:href="@{/account}"> Back to Account List</a>
 </div>
 </body>
 </html>

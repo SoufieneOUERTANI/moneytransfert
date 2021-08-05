@@ -72,8 +72,7 @@ public class MoneytransfertApplication
 		banckServices.retirer("soufiene_Mail@gmail_2.com_1",50, "Versement initial");
 
 		banckServices.virer("soufiene_Mail@gmail_2.com_1", "soufiene_Mail@gmail_3.com_1", 50, "Versement initial");
-
-		//System.out.println(banckServices.listTransactions("soufiene_Mail@gmail_3.com_1", 1, 3,"transactionDate" ,"ASC"));
+		System.out.println("SOUE >>> : " + banckServices.listTransactions("soufiene_Mail@gmail_3.com_1", 1, 3,"transactionDate" ,"ASC"));
 
 	}
 

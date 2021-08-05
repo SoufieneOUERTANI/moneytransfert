@@ -14,15 +14,16 @@
   <hr>
   <h2>Save Account</h2>
 
-  <!--  <form action="#" th:action="@{/account/saveAccount}" th:object="${account}"-->
-  <form th:action="@{'/account/createAccount' + '?accountId=' + ${accountId} + '&accountMail=' + ${accountMail}}"
-        method="POST">
+<!--  <form action="#" th:action="@{/account/saveAccount}" th:object="${account}"-->
+  <form action="#" th:action="@{'/account/saveAccount' + '?accountId=' + ${accountId} + '&accountMail=' + ${accountMail}}" th:object="${account}"
+
+    method="POST">
 
     <!--    <input type="text" th:field="*{accountId}"-->
     <!--           placeholder="Account accountId" class="form-control mb-4 col-4">-->
-    <input type="text" th:name="accountId"
+    <input type="text" th:field="*{accountId}"
            placeholder="Account accountId" class="form-control mb-4 col-4">
-    <input type="text" th:name="accountMail"
+    <input type="text" th:field="*{accountMail}"
            placeholder="Account Mail" class="form-control mb-4 col-4">
 
     <button type="submit" class="btn btn-info col-2"> Save Account</button>

@@ -12,7 +12,7 @@ import com.paymybuddy.moneytransfert.model.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
-    @Query("select tr from Transaction tr where tr.transactionId=:x")
+    @Query("select tr from Transaction tr where tr.account.accountId=:x")
     Page<Transaction> listTransaction(@Param("x") String AccountId, Pageable pageable);
 	
 }

@@ -10,7 +10,7 @@ public interface IClientService {
 
 	public List<Client> getClients();
 
-	public Client getClientByClientId(String clientId);
+	public Client getClientByClientMail(String clientMail);
 
 	public Client saveClient(Client client);
 

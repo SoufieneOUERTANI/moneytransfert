@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -77,5 +78,10 @@ public class Client {
                 ", birthday=" + birthday +
                 ", adress='" + adress + '\'' +
                 '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        clientMail = clientMail.toLowerCase(Locale.ROOT);
     }
 }

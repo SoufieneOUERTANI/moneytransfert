@@ -37,12 +37,12 @@ public class TransactionController {
     // display list of transactions
     @GetMapping("/transaction")
     public String viewHomePage(Model model, @ModelAttribute("transaction") Transaction transaction) {
-        return(findPagineted(1, "transactionId", "desc", model, transaction));
+        return(findPaginated(1, "transactionId", "desc", model, transaction));
     }
 
     // display list of transactions
     @GetMapping("/transaction/page/{pageNo}")
-    public String findPagineted(@PathVariable (value="pageNo") int pageNo,
+    public String findPaginated(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model,
@@ -110,12 +110,12 @@ public class TransactionController {
 
     @GetMapping("/transaction-details")
     public String showTransactionsdetails( Model model) {
-        return(findPagineted_details(1, "transactionId", "desc", model));
+        return(findPaginated_details(1, "transactionId", "desc", model));
     }
 
     // display list of transactions
     @GetMapping("/transaction-details/page/{pageNo}")
-    public String findPagineted_details(@PathVariable (value="pageNo") int pageNo,
+    public String findPaginated_details(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model ) {

@@ -1,7 +1,10 @@
 package com.paymybuddy.moneytransfert.controller;
 
 import java.util.List;
+import java.util.Locale;
 
+import com.paymybuddy.moneytransfert.model.Client;
+import com.paymybuddy.moneytransfert.service.IClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +19,23 @@ import com.paymybuddy.moneytransfert.service.IAccountService;
 @Controller
 public class AccountController {
 
-    private static final Logger logger = LogManager.getLogger("index");
+    private static final Logger logger = LogManager.getLogger("AccountController");
 
     @Autowired
     private IAccountService accountService;
 
+    @Autowired
+    private IClientService clientService;
+
     // display list of accounts
     @GetMapping("/account")
     public String viewHomePage(Model model) {
-        return(findPagineted(1, "accountId", "desc", model));
+        return(findPaginated(1, "creationDate", "desc", model));
     }
 
     // display list of accounts
     @GetMapping("/account/page/{pageNo}")
-    public String findPagineted(@PathVariable (value="pageNo") int pageNo,
+    public String findPaginated(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model ) {
@@ -59,12 +65,50 @@ public class AccountController {
         return "account_new";
     }
 
-    @PostMapping("/account/saveAccount")
-    public String saveAccount(@ModelAttribute("account") Account account) {
-        // save account to database
-        // logger.info("SOUE >>> account : "+account);
+    @PostMapping("/account/createAccount")
+    public String createAccount(
+//            @ModelAttribute("account") Account account,
+            @RequestParam(name = "accountId") String accountId, @RequestParam(name = "accountMail") String accountMail) {
+        if(accountId.substring(0,5).equals("null,"))
+            accountId = accountId.substring(5);
+        if(accountMail.substring(0,5).equals("null,"))
+            accountMail = accountMail.substring(5);
+
+        Account account = accountService.getAccountByAccountId(accountId);
+        if (account == null){
+            Client client = clientService.getClientByClientMail(accountMail);
+            if(client == null){
+                throw new RuntimeException("No client for this mail");
+            }
+            account=new Account(accountId, client);
+            accountService.saveAccount(account);
+            return "redirect:/account";
+       }
+        else
+            throw new RuntimeException("Account already exists");
+    }
+
+    @PostMapping("/account/updateAccount")
+    public String updateAccount(
+            @ModelAttribute("account") Account account
+//            //,
+//            @RequestParam(name = "accountId") String accountId, @RequestParam(name = "accountMail") String accountMail
+    ) {
+/*        if(accountId.substring(0,5).equals("null,"))
+            accountId = accountId.substring(5);
+        if(accountMail.substring(0,5).equals("null,"))
+            accountMail = accountMail.substring(5);*/
+
+
+        Client client = clientService.getClientByClientMail(account.getClientMail());
+        if(client == null){
+            throw new RuntimeException("No client for this mail");
+        }
+//        Account account= accountService.getAccountByAccountId(accountId);
+        account.setClient(client);
         accountService.saveAccount(account);
         return "redirect:/account";
+
     }
 
 
@@ -77,10 +121,13 @@ public class AccountController {
     }
 
     @GetMapping("/account/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") String id, Model model) {
+    public String showFormForUpdate(
+            //@ModelAttribute("account") Account account,
+            @PathVariable ( value = "id") String id, Model model) {
 
         // get account from the service
         Account account = accountService.getAccountByAccountId(id);
+        account.setClientMail(account.getClient().getClientMail());
 
         // set account as a model attribute to pre-populate the form
         model.addAttribute("account", account);

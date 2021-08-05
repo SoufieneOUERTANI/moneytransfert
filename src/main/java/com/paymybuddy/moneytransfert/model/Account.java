@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 
@@ -21,10 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 @Table(name="account")
 public class Account {
+
 	@Id
 	@NotNull(message = "Last name cannot be null")
 	@Column(name="account_id")
-	@Email(message = "Email should be valid")
+	//@Email(message = "Email should be valid")
 	private String accountId;
 
 	@ManyToOne
@@ -39,6 +39,9 @@ public class Account {
 	@JoinColumn(name="client_mail")
 	@NotNull
 	Client client;
+
+	@Transient
+	String clientMail;
 
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	@CreationTimestamp
@@ -58,7 +61,10 @@ public class Account {
 			orphanRemoval = true*/
 	)
 	List<Transaction> transactions;
-	
+
+
+
+
 //	@OneToMany(
 //			mappedBy = "sourceAccount", 
 //			cascade = CascadeType.ALL,
@@ -86,9 +92,15 @@ public class Account {
 				'}';
 	}
 
-	public Account(String accountId, float balance, Client client) {
+	public Account(String accountId, Client client) {
 		this.accountId = accountId;
-		this.balance = balance;
 		this.client = client;
 	}
+
+	public Account(String accountId, int balance, Client client) {
+		this.accountId = accountId;
+		this.client = client;
+		this.balance = balance;
+	}
+
 }
