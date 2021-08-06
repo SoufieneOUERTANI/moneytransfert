@@ -27,7 +27,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 //@Table(name="transaction")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="transaction_type", discriminatorType = DiscriminatorType.STRING,length = 1)
-public abstract class Transaction {
+public
+//abstract
+class Transaction {
 	
 	enum TransactionStatus {
 		Default_Status,
@@ -60,6 +62,9 @@ public abstract class Transaction {
 	@JoinColumn(name="account_id")
 	@NotNull
 	private Account account;
+
+	@Transient
+	private String accountId;
 
 	//@Positive(message = "Transaction must be positive")
 	@Column(name="transaction_amount")

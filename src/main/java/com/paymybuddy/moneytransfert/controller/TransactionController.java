@@ -2,6 +2,7 @@ package com.paymybuddy.moneytransfert.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.paymybuddy.moneytransfert.model.Account;
 import com.paymybuddy.moneytransfert.model.Versement;
@@ -20,7 +21,7 @@ import com.paymybuddy.moneytransfert.service.ITransactionService;
 @Controller
 public class TransactionController {
 
-    private static final Logger logger = LogManager.getLogger("index");
+    private static final Logger logger = LogManager.getLogger("TransactionController");
 
     @Autowired
     private ITransactionService transactionService;
@@ -37,7 +38,12 @@ public class TransactionController {
     // display list of transactions
     @GetMapping("/transaction")
     public String viewHomePage(Model model, @ModelAttribute("transaction") Transaction transaction) {
+//        public String viewHomePage(Model model) {
+
+            logger.info("Hello-1");
+
         return(findPaginated(1, "transactionId", "desc", model, transaction));
+//        return(findPaginated(1, "transactionId", "desc", model));
     }
 
     // display list of transactions
@@ -45,27 +51,47 @@ public class TransactionController {
     public String findPaginated(@PathVariable (value="pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
-                                Model model,
-                                @ModelAttribute("transaction") Transaction transaction ) {
+                                Model model
+            ,
+                                @ModelAttribute("transaction") Transaction transaction
+    ) {
+
+        logger.info("Hello1");
+
         int pageSize = 3;
         Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        logger.info("Hello2");
+
         List<Transaction> listTransactions = page.getContent();
+        logger.info("Hello3");
 
         List<Account> listAccounts = accountService.getAccounts();
+        List<String> listAccountsId = listAccounts.stream().map(x -> x.getAccountId()).collect(Collectors.toList());
+        logger.info("Hello4 listAccountsId : "+listAccountsId);
 
         //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
 
         model.addAttribute("currentPage", pageNo);
+        logger.info("Hello5");
+
         model.addAttribute("totalPages", page.getTotalPages());
+        logger.info("Hello6");
+
         model.addAttribute("totalItems", page.getTotalElements());
+        logger.info("Hello7");
+
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        logger.info("Hello8");
 
         model.addAttribute("listTransactions", listTransactions);
-        model.addAttribute("listAccounts", listAccounts);
+        logger.info("Hello9");
 
+        model.addAttribute("listAccountsId", listAccountsId);
+
+        logger.info("Hello10");
 
 
         return "transactions";
