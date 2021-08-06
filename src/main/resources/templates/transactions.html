@@ -32,9 +32,10 @@
                 <a class="nav-link active" href="#">Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" aria-disabled="true">Log off</a>
+                <form th:action="@{/logout}" method="POST">
+                    <input class="nav-link" type="submit" value="Log off"/>
+                </form>
             </li>
-
         </ul>
     </div>
 </div>
@@ -152,7 +153,7 @@
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
                         <div class="border mx-10">
 						    <a th:if="${currentPage != i}"
-                            th:href="@{'/transaction/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                               th:href="@{'/transaction/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 						    <span th:unless="${currentPage != i}">[[${i}]]</span>
                         </div>&nbsp; &nbsp;
 					</span>
