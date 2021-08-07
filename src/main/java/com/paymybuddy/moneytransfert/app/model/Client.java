@@ -36,7 +36,7 @@ public class Client {
     @Column(name="last_name")
     private String lastName;
 
-    @NotNull(message = "Birthday cannot be null")
+    //@NotNull(message = "Birthday cannot be null")
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Past(message = "Date de naissance doit être dans le passé")
@@ -65,6 +65,13 @@ public class Client {
         this.firstName = firstName;
         this.birthday = birthday;
         this.adress = adress;
+    }
+
+    // Constructeur sans les accomptes
+    public Client(String clientMail, String lastName, String firstName) {
+        this.clientMail = clientMail;
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 
     // override without the "List<Account> accounts" .. Else infinite loop

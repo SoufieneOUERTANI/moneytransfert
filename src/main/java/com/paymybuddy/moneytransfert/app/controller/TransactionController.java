@@ -9,6 +9,8 @@ import com.paymybuddy.moneytransfert.app.model.Versement;
 import com.paymybuddy.moneytransfert.app.service.IAccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,10 +23,16 @@ import org.springframework.web.bind.annotation.*;
 import com.paymybuddy.moneytransfert.app.model.Transaction;
 import com.paymybuddy.moneytransfert.app.service.ITransactionService;
 
+import javax.persistence.EntityManager;
+
+
 @Controller
 public class TransactionController {
 
     private static final Logger logger = LogManager.getLogger("TransactionController");
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private ITransactionService transactionService;

@@ -1,11 +1,14 @@
 package com.paymybuddy.moneytransfert.login.controller;
 
+import com.paymybuddy.moneytransfert.app.model.Client;
+import com.paymybuddy.moneytransfert.app.service.IClientService;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
 import com.paymybuddy.moneytransfert.login.user.CrmUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,12 +17,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.logging.Logger;
 
+@Transactional
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
 	
     @Autowired
     private IUserService userService;
+
+	@Autowired
+	private IClientService clientService;
 	
     private Logger logger = Logger.getLogger(getClass().getName());
     
@@ -65,8 +72,10 @@ public class RegistrationController {
         
         // create user account        						
         userService.save(theCrmUser);
-        
-        logger.info("Successfully created user: " + userName);
+        Client client = new Client(theCrmUser.getEmail(),theCrmUser.getLastName(),theCrmUser.getFirstName());
+		clientService.saveClient(client);
+
+		logger.info("Successfully created user: " + userName);
         
         return "registration-confirmation";		
 	}

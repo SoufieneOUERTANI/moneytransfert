@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 //@ToString
@@ -19,6 +21,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @DynamicUpdate
 @Table(name="account")
+@FilterDef(name="accountFilter", parameters={
+		@ParamDef( name="userMail", type="string" )
+})
+@Filters( {
+		@Filter(name="accountFilter", condition=":userMail = account_id")
+} )
 public class Account {
 
 	@Id
