@@ -1,10 +1,10 @@
 package com.paymybuddy.moneytransfert;
 
-import com.paymybuddy.moneytransfert.model.*;
-import com.paymybuddy.moneytransfert.repository.AccountRepository;
-import com.paymybuddy.moneytransfert.repository.ClientRepository;
-import com.paymybuddy.moneytransfert.repository.TransactionRepository;
-import com.paymybuddy.moneytransfert.service.IBanckServices;
+import com.paymybuddy.moneytransfert.app.model.*;
+import com.paymybuddy.moneytransfert.app.repository.AccountRepository;
+import com.paymybuddy.moneytransfert.app.repository.ClientRepository;
+import com.paymybuddy.moneytransfert.app.repository.TransactionRepository;
+import com.paymybuddy.moneytransfert.app.service.IBanckServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
