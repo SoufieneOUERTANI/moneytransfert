@@ -25,7 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 		@ParamDef( name="userMail", type="string" )
 })
 @Filters( {
-		@Filter(name="accountFilter", condition=":userMail = account_id")
+		@Filter(name="accountFilter", condition=":userMail = client_mail")
 } )
 public class Account {
 

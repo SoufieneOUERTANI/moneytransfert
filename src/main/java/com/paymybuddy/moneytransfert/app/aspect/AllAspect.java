@@ -42,7 +42,7 @@ public class AllAspect {
 			String currentUserName = authentication.getName();
 			logger.info("currentUserName-AccountServiceImpl : "+currentUserName);
 			//filter.setParameter("userMail", currentUserName );
-			filter.setParameter("userMail", "soufiene_Mail@gmail_4.com_1" );
+			filter.setParameter("userMail", currentUserName );
 		}
 		//return this.accountRepository.findAll(pageable);
 		else{

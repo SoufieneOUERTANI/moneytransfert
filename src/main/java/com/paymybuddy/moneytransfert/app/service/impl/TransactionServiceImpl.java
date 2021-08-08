@@ -2,6 +2,8 @@ package com.paymybuddy.moneytransfert.app.service.impl;
 
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class TransactionServiceImpl implements ITransactionService {
-	
+
+	private static final Logger logger = LogManager.getLogger("AccountController");
+
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
@@ -30,6 +34,10 @@ public class TransactionServiceImpl implements ITransactionService {
 	}	
 	
 	public Transaction saveTransaction(Transaction transaction) {
+		logger.info(">>> SOUE >>> : "+ transaction);
+		logger.info(">>> SOUE >>> : "+ transaction.getAccount().getClientMail());
+		transaction.setClientMail(transaction.getAccount().getClientMail());
+		logger.info(">>> SOUE >>> : "+ transaction.getClientMail());
 		return transactionRepository.save(transaction);
 	}
 	

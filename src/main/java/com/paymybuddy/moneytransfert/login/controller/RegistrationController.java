@@ -4,7 +4,7 @@ import com.paymybuddy.moneytransfert.app.model.Client;
 import com.paymybuddy.moneytransfert.app.service.IClientService;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
-import com.paymybuddy.moneytransfert.login.user.CrmUser;
+import com.paymybuddy.moneytransfert.login.user.NewUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -41,18 +41,18 @@ public class RegistrationController {
 	@GetMapping("/showRegistrationForm")
 	public String showMyLoginPage(Model theModel) {
 		
-		theModel.addAttribute("crmUser", new CrmUser());
+		theModel.addAttribute("newUser", new NewUser());
 		
 		return "registration-form";
 	}
 
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(
-				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				@Valid @ModelAttribute("newUser") NewUser theNewUser, 
 				BindingResult theBindingResult, 
 				Model theModel) {
 		
-		String userName = theCrmUser.getUserName();
+		String userName = theNewUser.getUserName();
 		logger.info("Processing registration form for: " + userName);
 		
 		// form validation
@@ -63,7 +63,7 @@ public class RegistrationController {
 		// check the database if user already exists
         User existing = userService.findByUserName(userName);
         if (existing != null){
-        	theModel.addAttribute("crmUser", new CrmUser());
+        	theModel.addAttribute("newUser", new NewUser());
 			theModel.addAttribute("registrationError", "User name already exists.");
 
 			logger.warning("User name already exists.");
@@ -71,8 +71,8 @@ public class RegistrationController {
         }
         
         // create user account        						
-        userService.save(theCrmUser);
-        Client client = new Client(theCrmUser.getEmail(),theCrmUser.getLastName(),theCrmUser.getFirstName());
+        userService.save(theNewUser);
+        Client client = new Client(theNewUser.getEmail(),theNewUser.getLastName(),theNewUser.getFirstName());
 		clientService.saveClient(client);
 
 		logger.info("Successfully created user: " + userName);

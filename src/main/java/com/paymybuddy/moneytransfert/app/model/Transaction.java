@@ -63,6 +63,10 @@ class Transaction {
 	@Transient
 	private String accountId;
 
+	@Column(name="client_mail")
+	@NotNull
+	String clientMail;
+
 	//@Positive(message = "Transaction must be positive")
 	@Column(name="transaction_amount")
 	private float transactionAmount;

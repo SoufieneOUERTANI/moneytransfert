@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 		@FieldMatch(first = "userName", second = "email", message = "The userName and the email must match")
 
 })
-public class CrmUser {
+public class NewUser {
 
 	@ValidEmail
 	@NotNull(message = "is required")
@@ -39,8 +39,17 @@ public class CrmUser {
 	@Size(min = 1, message = "is required")
 	private String email;
 
-	public CrmUser() {
+	public NewUser() {
 
+	}
+
+	public NewUser(String userName, String password, String matchingPassword, String firstName, String lastName, String email) {
+		this.userName = userName;
+		this.password = password;
+		this.matchingPassword = matchingPassword;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 
 	public String getUserName() {

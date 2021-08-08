@@ -5,7 +5,7 @@ import com.paymybuddy.moneytransfert.login.dao.UserDao;
 import com.paymybuddy.moneytransfert.login.entity.Role;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
-import com.paymybuddy.moneytransfert.login.user.CrmUser;
+import com.paymybuddy.moneytransfert.login.user.NewUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,20 +41,21 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public void save(CrmUser crmUser) {
+	public User save(NewUser newUser) {
 		User user = new User();
 		 // assign user details to the user object
-		user.setUserName(crmUser.getUserName());
-		user.setPassword(passwordEncoder.encode(crmUser.getPassword()));
-		user.setFirstName(crmUser.getFirstName());
-		user.setLastName(crmUser.getLastName());
-		user.setEmail(crmUser.getEmail());
+		user.setUserName(newUser.getUserName());
+		user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+		user.setFirstName(newUser.getFirstName());
+		user.setLastName(newUser.getLastName());
+		user.setEmail(newUser.getEmail());
 
 		// give user default role of "employee"
 		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
 
 		 // save user in the database
 		userDao.save(user);
+		return(user);
 	}
 
 	@Override

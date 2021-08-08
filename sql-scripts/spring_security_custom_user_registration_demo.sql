@@ -1,7 +1,9 @@
 DROP DATABASE  IF EXISTS `spring_security_custom_user_demo`;
 
-CREATE DATABASE  IF NOT EXISTS `spring_security_custom_user_demo`;
-USE `spring_security_custom_user_demo`;
+CREATE DATABASE  IF NOT EXISTS `moneytransfert_v2`;
+--
+--
+USE `moneytransfert_v2`;
 
 --
 -- Table structure for table `user`

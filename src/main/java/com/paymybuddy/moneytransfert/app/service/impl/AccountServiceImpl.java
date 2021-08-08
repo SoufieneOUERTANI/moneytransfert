@@ -32,6 +32,7 @@ public class AccountServiceImpl implements com.paymybuddy.moneytransfert.app.ser
     public Account getAccountByAccountId(String accountId){ return accountRepository.findByAccountId(accountId); }
 
     public Account saveAccount(Account account) {
+        account.setClientMail(account.getClient().getClientMail());
         return accountRepository.save(account);
     }
 
