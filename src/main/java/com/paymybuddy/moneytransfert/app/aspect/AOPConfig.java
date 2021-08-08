@@ -1,4 +1,4 @@
-package com.paymybuddy.moneytransfert.app;
+package com.paymybuddy.moneytransfert.app.aspect;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

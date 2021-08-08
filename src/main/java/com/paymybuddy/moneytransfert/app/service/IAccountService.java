@@ -17,6 +17,6 @@ public interface IAccountService {
 
 	public void deleteByAccountId(String accountId);
 
-	public Page<Account> findPaginated(int pageNo, int page, String sortField, String sortDirection);
+	public Page<Account> findPaginatedAccountService(int pageNo, int pageSize, String sortField, String sortDirection);
 
 }

@@ -39,7 +39,7 @@ public class AccountController {
                                 @RequestParam("sortDir") String sortDir,
                                 Model model ) {
         int pageSize = 3;
-        Page<Account> page = accountService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<Account> page = accountService.findPaginatedAccountService(pageNo, pageSize, sortField, sortDir);
         List<Account> listAccounts = page.getContent();
 
         logger.info("SOUE >>> page.getContent() : "+ page.getContent());
