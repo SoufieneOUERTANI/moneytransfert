@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransactionServiceImpl implements ITransactionService {
 
-	private static final Logger logger = LogManager.getLogger("AccountController");
+	private static final Logger logger = LogManager.getLogger("TransactionServiceImpl");
 
 	@Autowired
 	private TransactionRepository transactionRepository;
@@ -35,8 +35,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	
 	public Transaction saveTransaction(Transaction transaction) {
 		logger.info(">>> SOUE >>> : "+ transaction);
-		logger.info(">>> SOUE >>> : "+ transaction.getAccount().getClientMail());
-		transaction.setClientMail(transaction.getAccount().getClientMail());
+		logger.info(">>> SOUE >>> : "+ transaction.getAccount().getClient().getClientMail());
+		transaction.setClientMail(transaction.getAccount().getClient().getClientMail());
 		logger.info(">>> SOUE >>> : "+ transaction.getClientMail());
 		return transactionRepository.save(transaction);
 	}
