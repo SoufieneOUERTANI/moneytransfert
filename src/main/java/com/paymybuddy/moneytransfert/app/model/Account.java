@@ -49,7 +49,7 @@ public class Account {
 	Client client;
 
 	@Transient
-	String clientMail;
+	String ClientMail;
 
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	@CreationTimestamp
@@ -94,7 +94,7 @@ public class Account {
 	public String toString() {
 		return "Account{" +
 				"accountId='" + accountId + '\'' +
-				", client=" + client +
+				", client=" + client.getClientMail() +
 				", creationDate=" + creationDate +
 				", balance=" + balance +
 				'}';

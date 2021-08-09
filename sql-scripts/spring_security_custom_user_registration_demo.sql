@@ -31,6 +31,15 @@ CREATE TABLE `user` (
 -- Default passwords here are: fun123
 --
 
+
+--+---------+----------+-----------------------------+
+--| user id | password |            roles            |
+--+---------+----------+-----------------------------+
+--| john    | fun123   | ROLE_EMPLOYEE               |
+--| mary    | fun123   | ROLE_EMPLOYEE, ROLE_MANAGER |
+--| susan   | fun123   | ROLE_EMPLOYEE, ROLE_ADMIN   |
+--+---------+----------+-----------------------------+
+
 INSERT INTO `user` (username,password,first_name,last_name,email)
 VALUES 
 ('john','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','John','Doe','john@ouertani.com'),

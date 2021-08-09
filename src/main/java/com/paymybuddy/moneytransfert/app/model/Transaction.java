@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@ToString
+//@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -63,8 +63,9 @@ class Transaction {
 	@Transient
 	private String accountId;
 
-	@Column(name="client_mail")
-	@NotNull
+/*	@Column(name="client_mail")
+	@NotNull*/
+	@Transient
 	String clientMail;
 
 	//@Positive(message = "Transaction must be positive")
@@ -132,5 +133,20 @@ class Transaction {
 		this.account = account;
 		this.transactionAmount = transactionAmount;
 		this.sourceLabbel = sourceLabbel;
+	}
+
+	@Override
+	public String toString() {
+		return "Transaction{" +
+				"transactionId=" + transactionId +
+				", transactionDate=" + transactionDate +
+				///???
+//				", account=" + account.getAccountId() +
+				", accountId='" + accountId + '\'' +
+				", clientMail='" + clientMail + '\'' +
+				", transactionAmount=" + transactionAmount +
+				", sourceLabbel='" + sourceLabbel + '\'' +
+				", transactionStatus=" + transactionStatus +
+				'}';
 	}
 }

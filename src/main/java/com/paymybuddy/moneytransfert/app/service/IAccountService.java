@@ -11,6 +11,10 @@ public interface IAccountService {
 
 	public List<Account> getAccounts();
 
+	public List<Account> getMyAccounts();
+
+	public List<Account> getOtherAccounts();
+
 	public Account getAccountByAccountId(String accountId);
 
 	public Account saveAccount(Account account);

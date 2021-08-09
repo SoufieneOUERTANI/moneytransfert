@@ -87,9 +87,9 @@ public class MoneytransfertApplication
 		Account accout3 = accountService.saveAccount(new Account("soufiene_Mail@gmail_3.com_1",300, client3));
 		Account accout4 = accountService.saveAccount(new Account("soufiene_Mail@gmail_4.com_1",400, client4));
 
-		transactionService.saveTransaction(new Versement(accout2,50,"Ver"));
-		transactionService.saveTransaction(new Retrait(accout3,50,"Vir"));
-		transactionService.saveTransaction(new Retrait(accout3,50,"Vir"));
+		transactionService.saveTransaction(new Versement(accout2,250,"Versement1"));
+		transactionService.saveTransaction(new Retrait(accout2,50,"Virement1"));
+		transactionService.saveTransaction(new Retrait(accout2,150,"Virement2"));
 
 		System.out.println(banckServices.consult("soufiene_Mail@gmail_4.com_1"));
 

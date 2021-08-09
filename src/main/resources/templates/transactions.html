@@ -21,10 +21,10 @@
     <div>
         <ul class="nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" aria-disabled="true">Home</a>
+                <a class="nav-link" th:href="@{/account}" aria-disabled="true">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="#">Transfer</a>
+                <a class="nav-link" th:href="@{/}" aria-disabled="true">Transfert</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" aria-disabled="true">Profile</a>
@@ -44,13 +44,13 @@
 <div class="bg-light">
     <ul class="nav justify-content-start">
         <li class="nav-item">
-            <a class="nav-link active disabled" href="#" aria-disabled="true">Home</a>
+            <a class="nav-link" th:href="@{/account}" aria-disabled="true">Home</a>
         </li>
         <li class="my-auto">
             /
         </li>
         <li class="nav-item">
-            <a class="nav-link " href="#">Transfer</a>
+            <a class="nav-link" th:href="@{/}" aria-disabled="true">Transfert</a>
         </li>
     </ul>
 </div>
@@ -64,41 +64,126 @@
         <a th:href="@{/account/showNewAccountForm}" class="btn btn-primary btn-sm mt-3"> Add Connection </a>
     </div>
 
-    <form
-            class="card bg-light"
-            action="#" method="post"
-            th:action="@{/transaction/saveTransaction}"
-            th:object="${transaction}">
 
-        <div class="m-5 p-2">
+    <form class="card bg-light"
+          th:action="@{/bank/operation}"
+          method="post"
+    >
+
+        <div class="m-1 p-1">
+            <div class="row my-auto">
+                <div class="my-auto col-2">
+                    <div >
+                        <input required type="radio" name="OperationType" value="Vers"
+                               onchange="document.getElementById('DestinationAccount').style.display='none'">
+                    </div>
+                    <label>Versement</label>
+                </div>
+
+                <div class="my-auto col-2">
+
+                    <div >
+                        <input required type="radio" name="OperationType" value="Retr"
+                               onchange="document.getElementById('DestinationAccount').style.display='none'">
+                    </div>
+                    <label>Retrait</label>
+                </div>
+
+                <div class="my-auto col-2">
+
+                    <div >
+                        <input required type="radio" name="OperationType" value="Vire"
+                               checked="checked" onchange="document.getElementById('DestinationAccount').style.display='block'">
+                    </div>
+                    <label>Virement</label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="m-1 p-1">
             <div class="row my-auto">
 
+                <div class="my-auto col-5" id="SourceAccount">
+                    <select required name="myAccount">
+                        <option hidden value="">Select an Account</option>
+                        <option th:each="myAccount : ${listMyAccountsId}"
+                                th:text="${myAccount}"
+                                th:value="${myAccount}">
+                        </option>
+                    </select>
+                </div>
 
-                <div class="my-auto col-4">
-                    <select id="accountId" required th:field="*{accountId}">
+                <div class="my-auto col-5">
+                    <select name="accountId" id="DestinationAccount">
                         <option hidden value="">Select a Connection</option>
-                        <option th:each="accountId : ${listAccountsId}"
+                        <option th:each="accountId : ${listOtherAccountsId}"
                                 th:text="${accountId}"
                                 th:value="${accountId}">
                         </option>
                     </select>
                 </div>
 
-                <div class="my-auto col-3">
-                    <input type="number" min="0" th:field="*{transactionAmount}" placeholder="Amount">
+
+            </div>
+        </div>
+        <div class="m-1 p-1">
+            <div class="row my-auto">
+
+                <div class="my-auto col-5">
+                    <input required type="number" min="0" name="transactionAmount" placeholder="Amount">
                 </div>
 
-                <div class="my-auto col-3">
-                    <input type="text" th:field="*{sourceLabbel}" placeholder="Label">
+                <div class="my-auto col-5">
+                    <input required type="text" name="transactionSourceLabel" placeholder="Label">
                 </div>
 
                 <div class="my-auto col-2">
-                    <input class="btn btn-primary btn-block" type="submit" value="Pay">
+                    <input required class="btn btn-primary btn-block" type="submit" value="Pay">
                 </div>
+
             </div>
         </div>
+
     </form>
 
+    <!--
+
+        <form
+                class="card bg-light"
+                action="#" method="post"
+                th:action="@{/transaction/saveTransaction}"
+                th:object="${transaction}">
+
+            <div class="m-5 p-2">
+                <div class="row my-auto">
+
+                    <div class="my-auto col-4">
+                        <select id="accountId" required th:field="*{accountId}">
+                            <option hidden value="">Select a Connection</option>
+                            <option th:each="accountId : ${listAccountsId}"
+                                    th:text="${accountId}"
+                                    th:value="${accountId}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-auto col-3">
+                        <input type="number" min="0" th:field="*{transactionAmount}" placeholder="Amount">
+                    </div>
+
+                    <div class="my-auto col-3">
+                        <input type="text" th:field="*{sourceLabbel}" placeholder="Label">
+                    </div>
+
+                    <div class="my-auto col-2">
+                        <input class="btn btn-primary btn-block" type="submit" value="Pay">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    -->
 
     <h5 class="mt-5">
         My transactions
@@ -110,8 +195,8 @@
         <tr>
 
             <th>
-                <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=acccount.client.firstName&sortDir=' + ${reverseSortDir}}">
-                    First name</a>
+                <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=account.accountId&sortDir=' + ${reverseSortDir}}">
+                    Account Id</a>
             </th>
             <th>
                 <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=transactionAmount&sortDir=' + ${reverseSortDir}}">
@@ -123,15 +208,22 @@
                     Labbel</a>
             </th>
 
+            <th>
+                <a th:href="@{'/transaction/page/' + ${currentPage} + '?sortField=transactionDate&sortDir=' + ${reverseSortDir}}">
+                    Transaction Date</a>
+            </th>
+
+
         </tr>
         </thead>
         <tbody>
-        <tr th:each="transaction : ${listTransactions}">
+        <tr th:each="transaction : ${listMyTransactions}">
 
-            <td th:text="${transaction.account.client.firstName}"></td>
+            <td th:text="${transaction.account.accountId}"></td>
             <td th:text="${transaction.transactionAmount}"></td>
 
             <td th:text="${transaction.sourceLabbel}"></td>
+            <td th:text="${transaction.transactionDate}"></td>
 
         </tr>
         </tbody>
@@ -172,6 +264,9 @@
             </div>
         </div>
     </div>
+
+
+
 </div>
 </body>
 <footer>

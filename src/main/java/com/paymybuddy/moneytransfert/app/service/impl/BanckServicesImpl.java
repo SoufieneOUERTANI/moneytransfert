@@ -7,6 +7,8 @@ import com.paymybuddy.moneytransfert.app.model.Versement;
 import com.paymybuddy.moneytransfert.app.repository.AccountRepository;
 import com.paymybuddy.moneytransfert.app.repository.TransactionRepository;
 import com.paymybuddy.moneytransfert.app.service.IBanckServices;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class BanckServicesImpl implements IBanckServices {
+
+    private static final Logger logger = LogManager.getLogger("BanckServicesImpl");
 
     @Autowired
     AccountRepository accountRepository;
@@ -35,6 +39,8 @@ public class BanckServicesImpl implements IBanckServices {
 
     @Override
     public void verser(String accountId, int ammount, String labbel) {
+        logger.info("SOUE >>> verser");
+
         if(ammount<=0){
             throw new RuntimeException("Le montant du versment doit être positif");
         }
@@ -50,6 +56,8 @@ public class BanckServicesImpl implements IBanckServices {
 
     @Override
     public void retirer(String accountId, int ammount, String labbel) {
+        logger.info("SOUE >>> retirer");
+
         if(ammount<=0){
             throw new RuntimeException("Le montant du versment doit être positif");
         }
@@ -72,6 +80,7 @@ public class BanckServicesImpl implements IBanckServices {
         if(accountId1 == accountId2){
             throw new RuntimeException("Erreur virement : Compte source et déstination identiques");
         }
+        logger.info("SOUE >>> virer");
         retirer(accountId1, ammount, labbel);
         verser(accountId2, ammount, labbel);
     }

@@ -1,0 +1,65 @@
+<h5 class="mt-5">
+  My accounts
+</h5>
+
+
+<table border="1" class="table table-striped table-responsive-md">
+  <thead class="bg-success">
+  <tr>
+
+    <th>
+      <a th:href="@{'/account/page/' + ${currentPage} + '?sortField=accountId&sortDir=' + ${reverseSortDir}}">
+        AccoutnId</a>
+    </th>
+    <th>
+      <a th:href="@{'/account/page/' + ${currentPage} + '?sortField=balance&sortDir=' + ${reverseSortDir}}">
+        Balance</a>
+    </th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="account : ${listMyAccounts}">
+
+    <td th:text="${account.accountId}"></td>
+    <td th:text="${account.balance}"></td>
+
+  </tr>
+  </tbody>
+</table>
+
+<div th:if="${totalPages > 1}">
+  <div class="row col-sm-10">
+    <div class="col-sm-2">
+      Total Rows: [[${totalItems}]]
+    </div>
+
+
+    <div class="col-sm-1">
+      <a th:if="${currentPage > 1}"
+         th:href="@{'/account/page/' + '1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+      <span th:unless="${currentPage > 1}">First</span>
+    </div>
+
+    <div class="nav nav-pills">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <div class="border mx-10">
+						    <a th:if="${currentPage != i}"
+                               th:href="@{'/account/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						    <span th:unless="${currentPage != i}">[[${i}]]</span>
+                        </div>&nbsp; &nbsp;
+					</span>
+    </div>
+    <div class="col-sm-1">
+      <a th:if="${currentPage < totalPages}"
+         th:href="@{'/account/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+      <span th:unless="${currentPage < totalPages}">Next</span>
+    </div>
+
+    <div class="col-sm-1">
+      <a th:if="${currentPage < totalPages}"
+         th:href="@{'/account/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+      <span th:unless="${currentPage < totalPages}">Last</span>
+    </div>
+  </div>
+</div>

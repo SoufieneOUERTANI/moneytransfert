@@ -5,7 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-@ToString
+//@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,5 +18,12 @@ import javax.persistence.*;
 public class Retrait extends Transaction{
     public Retrait(Account account, float transactionAmount, String sourceLabbel) {
         super(account, transactionAmount, sourceLabbel);
+    }
+
+    @Override
+    public String toString() {
+        return "Retrait{" +
+                "clientMail='" + clientMail + '\'' +
+                "} " + super.toString();
     }
 }

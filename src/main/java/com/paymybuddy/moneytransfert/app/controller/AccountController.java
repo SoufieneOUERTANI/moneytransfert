@@ -1,6 +1,7 @@
 package com.paymybuddy.moneytransfert.app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.paymybuddy.moneytransfert.app.model.Client;
 import com.paymybuddy.moneytransfert.app.service.IClientService;
@@ -60,7 +61,15 @@ public class AccountController {
     public String showNewAccountForm(Model model) {
         // create model attribute to bind form data
         Account account = new Account();
+
         model.addAttribute("account", account);
+
+        List<Client> listClients = clientService.getClients();
+        List<String> listClientsId = listClients.stream().map(x -> x.getClientMail()).collect(Collectors.toList());
+        logger.info("Hello4 listAccountsId : "+listClientsId);
+
+        model.addAttribute("listClientsId", listClientsId);
+
         return "account_new";
     }
 

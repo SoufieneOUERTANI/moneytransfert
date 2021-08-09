@@ -9,8 +9,6 @@ import com.paymybuddy.moneytransfert.app.model.Versement;
 import com.paymybuddy.moneytransfert.app.service.IAccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Filter;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -75,10 +73,16 @@ public class TransactionController {
         logger.info("Hello1");
 
         int pageSize = 3;
-        Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<Transaction> page = transactionService.findPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
         logger.info("Hello2");
 
         List<Transaction> listTransactions = page.getContent();
+
+        Page<Transaction> myPage = transactionService.findMyPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
+        logger.info("Hello2");
+
+        List<Transaction> listMyTransactions = myPage.getContent();
+        model.addAttribute("listMyTransactions", listMyTransactions);
         logger.info("Hello3");
 
         List<Account> listAccounts = accountService.getAccounts();
@@ -90,10 +94,10 @@ public class TransactionController {
         model.addAttribute("currentPage", pageNo);
         logger.info("Hello5");
 
-        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalPages", myPage.getTotalPages());
         logger.info("Hello6");
 
-        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("totalItems", myPage.getTotalElements());
         logger.info("Hello7");
 
 
@@ -108,6 +112,20 @@ public class TransactionController {
         model.addAttribute("listAccountsId", listAccountsId);
 
         logger.info("Hello10");
+
+
+        List<String> listMyAccountsId =accountService.getMyAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
+
+        logger.info("listMyAccounts : "+listMyAccountsId);
+
+        model.addAttribute("listMyAccountsId", listMyAccountsId);
+
+        List<String> listOtherAccountsId =accountService.getOtherAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
+
+        logger.info("listMyAccounts : "+listOtherAccountsId);
+
+        model.addAttribute("listOtherAccountsId", listOtherAccountsId);
+
 
 
         return "transactions";
@@ -129,7 +147,6 @@ public class TransactionController {
         transactionService.saveTransaction(transaction);
         return "redirect:/transaction";
     }
-
 
     @GetMapping("/transaction/deleteTransaction/{id}")
     public String deleteTransaction(@PathVariable (value = "id") int id) {
@@ -162,7 +179,7 @@ public class TransactionController {
                                 @RequestParam("sortDir") String sortDir,
                                 Model model ) {
         int pageSize = 3;
-        Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<Transaction> page = transactionService.findPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
         List<Transaction> listTransactions = page.getContent();
 
         List<Account> listAccounts = accountService.getAccounts();

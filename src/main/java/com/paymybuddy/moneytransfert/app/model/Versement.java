@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-@ToString
+//@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,5 +19,12 @@ import javax.persistence.*;
 public class Versement extends Transaction{
     public Versement(Account account, float transactionAmount, String sourceLabbel) {
         super(account, transactionAmount, sourceLabbel);
+    }
+
+    @Override
+    public String toString() {
+        return "Versement{" +
+                "clientMail='" + clientMail + '\'' +
+                "} " + super.toString();
     }
 }
