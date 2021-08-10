@@ -21,7 +21,7 @@
     <div>
         <ul class="nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/account}" aria-disabled="true">Home</a>
+                <a class="nav-link" th:href="@{/account}" aria-disabled="true">Mes comptes</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}" aria-disabled="true">Transfert</a>
@@ -44,7 +44,7 @@
 <div class="bg-light">
     <ul class="nav justify-content-start">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/account}" aria-disabled="true">Home</a>
+            <a class="nav-link" th:href="@{/account}" aria-disabled="true">Mes comptes</a>
         </li>
         <li class="my-auto">
             /
@@ -97,6 +97,12 @@
                     </div>
                     <label>Virement</label>
                 </div>
+
+                <div class="my-auto col-2 text-danger">
+                    <div th:text="${#httpServletRequest.getParameter('error')}">
+                    </div>
+                </div>
+
 
             </div>
         </div>

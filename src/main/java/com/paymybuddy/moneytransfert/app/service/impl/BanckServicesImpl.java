@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 @Transactional
 @Service
@@ -31,7 +32,7 @@ public class BanckServicesImpl implements IBanckServices {
     @Override
     public Account consult(String accountId) {
         Account account = accountRepository.findByAccountId(accountId);
-        if(account==null){
+        if (account == null) {
             throw new RuntimeException("Compte introuvale");
         }
         return account;
@@ -41,47 +42,49 @@ public class BanckServicesImpl implements IBanckServices {
     public void verser(String accountId, int ammount, String labbel) {
         logger.info("SOUE >>> verser");
 
-        if(ammount<=0){
+        if (ammount <= 0) {
             throw new RuntimeException("Le montant du versment doit être positif");
         }
         Account account = accountRepository.findByAccountId(accountId);
-        if(account==null){
+        if (account == null) {
             throw new RuntimeException("Compte inexistant");
         }
-        Versement versement = new Versement(account, (float) (ammount*0.95), labbel);
+        Versement versement = new Versement(account, (float) (ammount * 0.95), labbel);
         transactionRepository.save(versement);
-        account.setBalance((float) (account.getBalance()+(ammount*0.95)));
+        account.setBalance((float) (account.getBalance() + (ammount * 0.95)));
         accountRepository.save(account);
     }
 
     @Override
-    public void retirer(String accountId, int ammount, String labbel) {
+    public void retirer(Model model, String accountId, int ammount, String labbel) {
         logger.info("SOUE >>> retirer");
 
-        if(ammount<=0){
+        Account account = null;
+        if (ammount <= 0) {
             throw new RuntimeException("Le montant du versment doit être positif");
         }
-        Account account = accountRepository.findByAccountId(accountId);
-        if(account==null){
+        account = accountRepository.findByAccountId(accountId);
+        if (account == null) {
             throw new RuntimeException("Compte inexistant");
         }
-        if(account.getBalance()< ammount*1.05)
-        {
+        if (account.getBalance() < ammount * 1.05) {
+            logger.info(">>> SOUE \"Solde insuffisant\" : ");
             throw new RuntimeException("Solde insuffisant");
         }
-        Retrait retrait = new Retrait(account, (float) (ammount*1.05), labbel);
+        Retrait retrait = new Retrait(account, (float) (ammount * 1.05), labbel);
         transactionRepository.save(retrait);
-        account.setBalance((float) (account.getBalance()-(ammount*1.05)));
+        account.setBalance((float) (account.getBalance() - (ammount * 1.05)));
         accountRepository.save(account);
     }
 
     @Override
-    public void virer(String accountId1, String accountId2, int ammount, String labbel) {
-        if(accountId1 == accountId2){
+    public void virer(Model model, String accountId1, String accountId2, int ammount, String labbel) {
+
+        if (accountId1 == accountId2) {
             throw new RuntimeException("Erreur virement : Compte source et déstination identiques");
         }
         logger.info("SOUE >>> virer");
-        retirer(accountId1, ammount, labbel);
+        retirer(model, accountId1, ammount, labbel);
         verser(accountId2, ammount, labbel);
     }
 

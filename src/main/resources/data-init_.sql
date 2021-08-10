@@ -1,0 +1,5 @@
+INSERT INTO `role` (name)
+VALUES
+('ROLE_EMPLOYEE'),('ROLE_MANAGER'),('ROLE_ADMIN');
+commit;
+
