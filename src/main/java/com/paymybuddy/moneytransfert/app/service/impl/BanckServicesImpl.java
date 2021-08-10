@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
-@Transactional
+//@Transactional
 @Service
 public class BanckServicesImpl implements IBanckServices {
 
@@ -47,7 +47,7 @@ public class BanckServicesImpl implements IBanckServices {
         }
         Account account = accountRepository.findByAccountId(accountId);
         if (account == null) {
-            throw new RuntimeException("Compte inexistant");
+            throw new RuntimeException("Vérifier le compte à créditer");
         }
         Versement versement = new Versement(account, (float) (ammount * 0.95), labbel);
         transactionRepository.save(versement);
@@ -65,7 +65,7 @@ public class BanckServicesImpl implements IBanckServices {
         }
         account = accountRepository.findByAccountId(accountId);
         if (account == null) {
-            throw new RuntimeException("Compte inexistant");
+            throw new RuntimeException("Vérifier le compte à débiter");
         }
         if (account.getBalance() < ammount * 1.05) {
             logger.info(">>> SOUE \"Solde insuffisant\" : ");
@@ -78,14 +78,50 @@ public class BanckServicesImpl implements IBanckServices {
     }
 
     @Override
-    public void virer(Model model, String accountId1, String accountId2, int ammount, String labbel) {
+    @Transactional
+    public void virer(Model model, String accountId1, String accountId2, int amount, String labbel) {
 
         if (accountId1 == accountId2) {
             throw new RuntimeException("Erreur virement : Compte source et déstination identiques");
         }
         logger.info("SOUE >>> virer");
-        retirer(model, accountId1, ammount, labbel);
-        verser(accountId2, ammount, labbel);
+        ///>>> Retirer >>>
+        // retirer(model, accountId1, amount, labbel);
+        logger.info("SOUE >>> retirer");
+
+        Account account = null;
+        if (amount <= 0) {
+            throw new RuntimeException("Le montant du versment doit être positif");
+        }
+        account = accountRepository.findByAccountId(accountId1);
+        if (account == null) {
+            throw new RuntimeException("Vérifier le compte à débiter");
+        }
+        if (account.getBalance() < amount * 1.05) {
+            logger.info(">>> SOUE \"Solde insuffisant\" : ");
+            throw new RuntimeException("Solde insuffisant");
+        }
+        Retrait retrait = new Retrait(account, (float) (amount * 1.05), labbel);
+        transactionRepository.save(retrait);
+        account.setBalance((float) (account.getBalance() - (amount * 1.05)));
+        accountRepository.save(account);
+
+        ///>>> Verser  >>>
+        // verser(accountId2, amount, labbel);
+        logger.info("SOUE >>> verser");
+
+        if (amount <= 0) {
+            throw new RuntimeException("Le montant du versment doit être positif");
+        }
+        Account account1 = accountRepository.findByAccountId(accountId2);
+        if (account1 == null) {
+            throw new RuntimeException("Vérifier le compte à créditer");
+        }
+        Versement versement = new Versement(account1, (float) (amount * 0.95), labbel);
+        transactionRepository.save(versement);
+        account1.setBalance((float) (account1.getBalance() + (amount * 0.95)));
+        accountRepository.save(account1);
+
     }
 
     @Override
@@ -94,5 +130,4 @@ public class BanckServicesImpl implements IBanckServices {
                 Sort.by(sortField).descending();
         return transactionRepository.listTransaction(accountId, PageRequest.of(page - 1, pageSize, sort));
     }
-
 }

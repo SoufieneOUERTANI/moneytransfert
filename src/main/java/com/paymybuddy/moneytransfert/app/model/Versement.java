@@ -27,4 +27,7 @@ public class Versement extends Transaction{
                 "clientMail='" + clientMail + '\'' +
                 "} " + super.toString();
     }
+
+/*    @Column(name="transaction_type", insertable = false, updatable = false)
+    protected int transactionType;*/
 }

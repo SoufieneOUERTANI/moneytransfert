@@ -35,6 +35,10 @@ class Transaction {
 		REFUSED
 	}
 
+
+/*	@Column(name="transaction_type", insertable = false, updatable = false)
+	protected int transactionType;*/
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="transaction_id")
@@ -111,7 +115,6 @@ class Transaction {
 	//private TransactionStatus  transactionStatus;
 	@Enumerated(EnumType.STRING)
 	private TransactionStatus  transactionStatus;
-
 
     //@NotNull(message = "Transaction type cannot be null")
 	//private TransactionType transactionType;

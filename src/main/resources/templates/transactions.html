@@ -111,7 +111,7 @@
             <div class="row my-auto">
 
                 <div class="my-auto col-5" id="SourceAccount">
-                    <select required name="myAccount">
+                    <select name="myAccount" required>
                         <option hidden value="">Select an Account</option>
                         <option th:each="myAccount : ${listMyAccountsId}"
                                 th:text="${myAccount}"
@@ -129,7 +129,6 @@
                         </option>
                     </select>
                 </div>
-
 
             </div>
         </div>
@@ -219,6 +218,10 @@
                     Transaction Date</a>
             </th>
 
+            <th>
+                    transaction_type
+            </th>
+
 
         </tr>
         </thead>
@@ -227,9 +230,15 @@
 
             <td th:text="${transaction.account.accountId}"></td>
             <td th:text="${transaction.transactionAmount}"></td>
-
             <td th:text="${transaction.sourceLabbel}"></td>
             <td th:text="${transaction.transactionDate}"></td>
+
+            <td>
+                <span th:if="${transaction.class.simpleName=='Retrait'}">Retrait</span>
+                <span th:unless="${transaction.class.simpleName=='Retrait'}">Versement</span>
+            </td>
+
+
 
         </tr>
         </tbody>
