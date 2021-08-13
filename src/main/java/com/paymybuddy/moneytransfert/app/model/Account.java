@@ -2,16 +2,23 @@ package com.paymybuddy.moneytransfert.app.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 import lombok.*;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 //@ToString
@@ -28,11 +35,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 		@Filter(name="accountFilter", condition=":userMail = client_mail")
 } )
 public class Account {
+/*	@Autowired
+	EntityManager entityManager;*/
 
 	@Id
 	@NotNull(message = "Last name cannot be null")
 	@Column(name="account_id")
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@Email(message = "Email should be valid")
+	@Size(max = 50)
 	private String accountId;
 
 	@ManyToOne
@@ -103,6 +114,15 @@ public class Account {
 	public Account(String accountId, Client client) {
 		this.accountId = accountId;
 		this.client = client;
+/*		Query q = entityManager.createNativeQuery("SELECT a.account_id FROM account a WHERE a.client_mail = :client_mail");
+		q.setParameter("id", client.getClientMail());
+		//Object[] accountIds = (Object[]) q.getSingleResult();
+		List<String> accountIds = (List<String>) q.getSingleResult();
+		Long max = accountIds.stream().map( o -> o.split("-")[0])
+          .mapToLong(Long::parseLong)
+          .max()
+          .orElse(0L);
+		this.accountId = max + "-" + client;*/
 	}
 
 	public Account(String accountId, int balance, Client client) {

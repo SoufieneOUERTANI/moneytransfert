@@ -17,4 +17,5 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     public List<Account> findByClientClientMailNot(String clientMail);
 
 
+
 }

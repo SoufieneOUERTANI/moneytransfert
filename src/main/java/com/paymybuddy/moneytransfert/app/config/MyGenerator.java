@@ -28,12 +28,12 @@ public class MyGenerator
               .getIdentifierPropertyName(),
             obj.getClass().getSimpleName());
 
-        Stream ids = session.createQuery(query).stream();
-        Long max = 0L;
-//        Long max = ids.map( o -> o.replace(prefix + "-", ""))
-//          .mapToLong(Long::parseLong)
-//          .max()
-//          .orElse(0L);
+        Stream<String> ids = session.createQuery(query).stream();
+        //Long max = 0L;
+        Long max = ids.map( o -> o.replace(prefix + "-", ""))
+          .mapToLong(Long::parseLong)
+          .max()
+          .orElse(0L);
 
         return prefix + "-" + (max + 1);
     }

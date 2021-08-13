@@ -1,6 +1,9 @@
 package com.paymybuddy.moneytransfert.app.service.impl;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.paymybuddy.moneytransfert.app.service.IClientService;
 import org.apache.logging.log4j.LogManager;
@@ -77,6 +80,14 @@ public class AccountServiceImpl implements com.paymybuddy.moneytransfert.app.ser
 
     public Account saveAccount(Account account) {
         account.setClientMail(account.getClient().getClientMail());
+
+        List<String> AccountIdList = accountRepository.findAll().stream().map(o->o.getAccountId()).collect(Collectors.toList());
+        long max = AccountIdList.stream().map(o->o.split("-")[1])
+                .mapToLong(Long::parseLong)
+                .max()
+                .orElse(0L) + 1;
+        String stringMax = "FR-"+String.format("%010d", max);
+        account.setAccountId(stringMax+"-"+account.getClient().getClientMail());
         return accountRepository.save(account);
     }
 
