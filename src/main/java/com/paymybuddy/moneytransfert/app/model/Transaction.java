@@ -63,11 +63,11 @@ class Transaction {
 //			)
 	@JoinColumn(name="account_id")
 	@NotNull
-	@Size(max = 50)
+	//@Size(max = 50)
 	private Account account;
 
 	@Transient
-	private String accountId;
+	private int accountId;
 
 /*	@Column(name="client_mail")
 	@NotNull*/

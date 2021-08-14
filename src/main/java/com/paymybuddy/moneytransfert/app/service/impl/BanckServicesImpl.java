@@ -30,7 +30,7 @@ public class BanckServicesImpl implements IBanckServices {
     TransactionRepository transactionRepository;
 
     @Override
-    public Account consult(String accountId) {
+    public Account consult(int accountId) {
         Account account = accountRepository.findByAccountId(accountId);
         if (account == null) {
             throw new RuntimeException("Compte introuvale");
@@ -39,7 +39,7 @@ public class BanckServicesImpl implements IBanckServices {
     }
 
     @Override
-    public void verser(String accountId, int ammount, String labbel) {
+    public void verser(int accountId, int ammount, String labbel) {
         logger.info("SOUE >>> verser");
 
         if (ammount <= 0) {
@@ -56,7 +56,7 @@ public class BanckServicesImpl implements IBanckServices {
     }
 
     @Override
-    public void retirer(Model model, String accountId, int ammount, String labbel) {
+    public void retirer(Model model, int accountId, int ammount, String labbel) {
         logger.info("SOUE >>> retirer");
 
         Account account = null;
@@ -79,7 +79,7 @@ public class BanckServicesImpl implements IBanckServices {
 
     @Override
     @Transactional
-    public void virer(Model model, String accountId1, String accountId2, int amount, String labbel) {
+    public void virer(Model model, int accountId1, int accountId2, int amount, String labbel) {
 
         if (accountId1 == accountId2) {
             throw new RuntimeException("Erreur virement : Compte source et déstination identiques");
@@ -125,7 +125,7 @@ public class BanckServicesImpl implements IBanckServices {
     }
 
     @Override
-    public Page<Transaction> listTransactions(String accountId, int page, int pageSize, String sortField, String sortDirection) {
+    public Page<Transaction> listTransactions(int accountId, int page, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         return transactionRepository.listTransaction(accountId, PageRequest.of(page - 1, pageSize, sort));

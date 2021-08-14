@@ -17,12 +17,26 @@ public class BankController {
     IBanckServices banckServices;
 
     @PostMapping("/bank/operation")
-    public String bankOperation(Model model, String myAccount, String accountId, int transactionAmount, String transactionSourceLabel, String OperationType) {
+    public String bankOperation(Model model, String myAccountString, String accountIdString, int transactionAmount, String transactionSourceLabel, String OperationType) {
+
         logger.info("OperationType : " + OperationType);
-        logger.info("myAccount : " + myAccount);
-        logger.info("accountId : " + accountId);
+        logger.info("myAccountString : " + myAccountString);
+        logger.info("accountIdString : " + accountIdString);
         logger.info("transactionAmount : " + transactionAmount);
         logger.info("transactionSourceLabel : " + transactionSourceLabel);
+
+        int accountId = 0;
+        int myAccount = 0;
+
+        myAccount = Integer.parseInt(myAccountString);
+        logger.info("myAccount : " + myAccount);
+
+        if (! accountIdString.equals(null) && ! accountIdString.equals("")){
+            accountId = Integer.parseInt(accountIdString);
+            logger.info("accountId : " + accountId);
+        }
+
+
         try {
 
             if (OperationType.equals("Vers")) {
@@ -39,7 +53,6 @@ public class BankController {
 
             if (OperationType.equals("Vire")) {
                 logger.info("OperationType : " + OperationType);
-
                 banckServices.virer(model, myAccount, accountId, transactionAmount, transactionSourceLabel);
             }
         } catch (Exception e) {

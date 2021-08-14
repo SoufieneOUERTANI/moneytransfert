@@ -16,7 +16,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
     @Query("select tr from Transaction tr where tr.account.accountId=:x")
-    Page<Transaction> listTransaction(@Param("x") String AccountId, Pageable pageable);
+    Page<Transaction> listTransaction(@Param("x") int AccountId, Pageable pageable);
     public List<Transaction> findByAccountClientClientMail(String clientMail);
     public Page<Transaction> findAllByAccountClientClientMail(String clientMail, Pageable pageable);
 

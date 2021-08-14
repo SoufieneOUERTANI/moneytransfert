@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.paymybuddy.moneytransfert.app.service.IAccountService;
 import com.paymybuddy.moneytransfert.app.service.IClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +28,7 @@ import javax.persistence.EntityManager;
 
 @Transactional
 @Service
-public class AccountServiceImpl implements com.paymybuddy.moneytransfert.app.service.IAccountService {
+public class AccountServiceImpl implements IAccountService {
 
     private static final Logger logger = LogManager.getLogger("AccountServiceImpl");
 
@@ -76,22 +77,24 @@ public class AccountServiceImpl implements com.paymybuddy.moneytransfert.app.ser
         return null;
     }
 
-    public Account getAccountByAccountId(String accountId){ return accountRepository.findByAccountId(accountId); }
+    public Account getAccountByAccountId(int accountId){ return accountRepository.findByAccountId(accountId); }
 
     public Account saveAccount(Account account) {
         account.setClientMail(account.getClient().getClientMail());
 
-        List<String> AccountIdList = accountRepository.findAll().stream().map(o->o.getAccountId()).collect(Collectors.toList());
+/*        List<String> AccountIdList = accountRepository.findAll().stream().map(o->String.valueOf(o.getAccountId())).collect(Collectors.toList());
         long max = AccountIdList.stream().map(o->o.split("-")[1])
                 .mapToLong(Long::parseLong)
                 .max()
                 .orElse(0L) + 1;
         String stringMax = "FR-"+String.format("%010d", max);
-        account.setAccountId(stringMax+"-"+account.getClient().getClientMail());
+        //account.setAccountId(stringMax+"-"+account.getClient().getClientMail());
+        */
+
         return accountRepository.save(account);
     }
 
-    public void deleteByAccountId(String accountId) {
+    public void deleteByAccountId(int accountId) {
         accountRepository.deleteById(accountId);
     }
 

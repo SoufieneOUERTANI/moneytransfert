@@ -66,7 +66,7 @@ public class AccountController {
 
         List<Client> listClients = clientService.getClients();
         List<String> listClientsId = listClients.stream().map(x -> x.getClientMail()).collect(Collectors.toList());
-        logger.info("Hello4 listAccountsId : "+listClientsId);
+        logger.info("Hello4 listClientsId : "+listClientsId);
 
         model.addAttribute("listClientsId", listClientsId);
 
@@ -76,24 +76,32 @@ public class AccountController {
     @PostMapping("/account/createAccount")
     public String createAccount(
 //            @ModelAttribute("account") Account account,
-            @RequestParam(name = "accountId") String accountId, @RequestParam(name = "accountMail") String accountMail) {
-        if(accountId.substring(0,5).equals("null,"))
-            accountId = accountId.substring(5);
+            @RequestParam(name = "accountId") String[] accountId_tab, @RequestParam(name = "accountMail") String accountMail) {
+/*
+        logger.info("accountId : "+accountId_tab[0]);
+        logger.info("accountId : "+accountId_tab[1]);
+*/
+        logger.info("accountMail : "+accountMail);
+
+        //int accountId = Integer.parseInt(accountId_tab[0]);
+/*        if(accountId.substring(0,5).equals("null,"))
+            accountId = accountId.substring(5);*/
         if(accountMail.substring(0,5).equals("null,"))
             accountMail = accountMail.substring(5);
 
-        Account account = accountService.getAccountByAccountId(accountId);
-        if (account == null){
+
+/*        Account account = accountService.getAccountByAccountId(accountId);
+        if (account == null){*/
             Client client = clientService.getClientByClientMail(accountMail);
             if(client == null){
                 throw new RuntimeException("No client for this mail");
             }
-            account=new Account(accountId, client);
+            Account account=new Account(client);
             accountService.saveAccount(account);
             return "redirect:/account";
-       }
+/*       }
         else
-            throw new RuntimeException("Account already exists");
+            throw new RuntimeException("Account already exists");*/
     }
 
     @PostMapping("/account/updateAccount")
@@ -121,7 +129,7 @@ public class AccountController {
 
 
     @GetMapping("/account/deleteAccount/{id}")
-    public String deleteAccount(@PathVariable (value = "id") String id) {
+    public String deleteAccount(@PathVariable (value = "id") int id) {
 
         // call delete account method
         this.accountService.deleteByAccountId(id);
@@ -131,7 +139,7 @@ public class AccountController {
     @GetMapping("/account/showFormForUpdate/{id}")
     public String showFormForUpdate(
             //@ModelAttribute("account") Account account,
-            @PathVariable ( value = "id") String id, Model model) {
+            @PathVariable ( value = "id") int id, Model model) {
 
         // get account from the service
         Account account = accountService.getAccountByAccountId(id);

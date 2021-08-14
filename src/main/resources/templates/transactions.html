@@ -111,21 +111,21 @@
             <div class="row my-auto">
 
                 <div class="my-auto col-5" id="SourceAccount">
-                    <select name="myAccount" required>
+                    <select name="myAccountString" required>
                         <option hidden value="">Select an Account</option>
-                        <option th:each="myAccount : ${listMyAccountsId}"
-                                th:text="${myAccount}"
-                                th:value="${myAccount}">
+                        <option th:each="myAccountString : ${listMyAccountsId}"
+                                th:text="${myAccountString}"
+                                th:value="${myAccountString}">
                         </option>
                     </select>
                 </div>
 
                 <div class="my-auto col-5">
-                    <select name="accountId" id="DestinationAccount">
+                    <select name="accountIdString" id="DestinationAccount">
                         <option hidden value="">Select a Connection</option>
-                        <option th:each="accountId : ${listOtherAccountsId}"
-                                th:text="${accountId}"
-                                th:value="${accountId}">
+                        <option th:each="accountIdString : ${listOtherAccountsId}"
+                                th:text="${accountIdString}"
+                                th:value="${accountIdString}">
                         </option>
                     </select>
                 </div>

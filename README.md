@@ -4,10 +4,13 @@
 <div style="margin-left: 3em">
 1 : avec le nom "moneytransfert" avec aucune table dedans
 
-2 : Mettre à jour e fichier application.properties avec le user et le mot de passe de la base de donnees
+2 : Mettre à jour le fichier application.properties avec le user et le mot de passe de la base de donnees
 
 spring.datasource.username=<br>
 spring.datasource.password=
+
+3 : Tester la connexion en lançant la classe test :
+com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 
 </div>
 <h3>1- Lancer l'application une première fois pour la création automatique des tables </h3> pour créer les tables de la base de donnée : Mettre à jour les paramètres suivants dans le fichier application.properties
@@ -16,7 +19,7 @@ spring.datasource.password=
 1 : Vérifier que la ligne suivante est à "create" : 
 <b>spring.jpa.hibernate.ddl-auto = create</b>
 
-2 : Vérifier que la ligne suivante est commentée (#) : <b>#</b>spring.datasource.platform=init
+2 : Vérifier que la ligne suivante est commentée (#) : <b>#</b>spring.datasource.platform=update
 
 3 : Lancer l'application
 
@@ -29,7 +32,7 @@ spring.datasource.password=
 
 1 : "update" : <b>spring.jpa.hibernate.ddl-auto = update</b>
 
-2 : Décommenter la ligne suivante : <b>spring.datasource.platform=init</b>
+2 : Décommenter la ligne suivante : <b>spring.datasource.platform=update</b>
 
 3 : Redémarrer l'application
 
@@ -65,9 +68,9 @@ spring.datasource.password=
 <br><br>
 
 <b>Winwdows, To externalize DB password => </b><br>
-Add a new Windos environment variable "spring.datasource.password" with the right value corresponding to your DB<br>
-Remove it from the "spring.datasource.password" parameter from application.properties file<br>
-run the app on the commande line : mvn spring-boot:run
+Add a new Windos environment variable "spring.datasource.password" with the right password value corresponding to your DB<br>
+Remove the "spring.datasource.password" parameter from application.properties file, or comment it<br>
+run the app on the command line : mvn spring-boot:run
 <br><br>
 
 

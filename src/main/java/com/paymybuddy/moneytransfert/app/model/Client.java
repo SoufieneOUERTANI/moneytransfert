@@ -27,7 +27,7 @@ public class Client {
     @NotNull(message = "Last name cannot be null")
     @Column(name="client_mail")
     @Email(message = "Email should be valid")
-    @Size(max = 50)
+    //@Size(max = 50)
     String clientMail;
 
     @NotNull(message = "First name cannot be null")

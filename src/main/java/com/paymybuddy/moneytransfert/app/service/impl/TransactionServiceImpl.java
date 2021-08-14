@@ -62,11 +62,11 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     public Transaction saveTransaction(Transaction transaction) {
-        if (transaction.getAccount() == null && transaction.getAccountId() != null) {
+        if (transaction.getAccount() == null && transaction.getAccountId() != 0) {
             transaction.setAccount(accountService.getAccountByAccountId(transaction.getAccountId()));
         }
 
-        if (transaction.getAccount() != null && transaction.getAccountId() == null) {
+        if (transaction.getAccount() != null && transaction.getAccountId() == 0) {
             transaction.setAccountId(transaction.getAccount().getAccountId());
         }
 

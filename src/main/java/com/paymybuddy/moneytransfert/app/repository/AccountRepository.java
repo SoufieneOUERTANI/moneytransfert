@@ -9,9 +9,9 @@ import com.paymybuddy.moneytransfert.app.model.Account;
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, String> {
+public interface AccountRepository extends JpaRepository<Account, Integer> {
     // Derived queries on accountId
-    public Account findByAccountId(String accountId);
+    public Account findByAccountId(int accountId);
     //public List<Account> findByDuplicateClientMail(String clientMail);
     public List<Account> findByClientClientMail(String clientMail);
     public List<Account> findByClientClientMailNot(String clientMail);

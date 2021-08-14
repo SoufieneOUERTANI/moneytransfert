@@ -39,12 +39,12 @@ public class Account {
 	EntityManager entityManager;*/
 
 	@Id
-	@NotNull(message = "Last name cannot be null")
+	//@NotNull(message = "Last name cannot be null")
 	@Column(name="account_id")
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@Email(message = "Email should be valid")
-	@Size(max = 50)
-	private String accountId;
+	//@Size(max = 50)
+	private int accountId;
 
 	@ManyToOne
 //			(
@@ -57,7 +57,7 @@ public class Account {
 //	)
 	@JoinColumn(name="client_mail")
 	@NotNull
-	@Size(max = 50)
+	//@Size(max = 50)
 	Client client;
 
 	@Transient
@@ -112,9 +112,13 @@ public class Account {
 				'}';
 	}
 
-	public Account(String accountId, Client client) {
-		this.accountId = accountId;
+	public Account(Client client) {
 		this.client = client;
+	}
+
+	public Account(int accountId, Client client) {
+		this(client);
+		this.accountId = accountId;
 /*		Query q = entityManager.createNativeQuery("SELECT a.account_id FROM account a WHERE a.client_mail = :client_mail");
 		q.setParameter("id", client.getClientMail());
 		//Object[] accountIds = (Object[]) q.getSingleResult();
@@ -126,9 +130,8 @@ public class Account {
 		this.accountId = max + "-" + client;*/
 	}
 
-	public Account(String accountId, int balance, Client client) {
-		this.accountId = accountId;
-		this.client = client;
+	public Account(int accountId, Client client, int balance ) {
+		this(accountId, client);
 		this.balance = balance;
 	}
 

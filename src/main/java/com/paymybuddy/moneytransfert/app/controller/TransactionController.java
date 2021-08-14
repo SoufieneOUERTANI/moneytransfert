@@ -86,7 +86,7 @@ public class TransactionController {
         logger.info("Hello3");
 
         List<Account> listAccounts = accountService.getAccounts();
-        List<String> listAccountsId = listAccounts.stream().map(x -> x.getAccountId()).collect(Collectors.toList());
+        List<Integer> listAccountsId = listAccounts.stream().map(x -> x.getAccountId()).collect(Collectors.toList());
         logger.info("Hello4 listAccountsId : "+listAccountsId);
 
         //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
@@ -114,15 +114,15 @@ public class TransactionController {
         logger.info("Hello10");
 
 
-        List<String> listMyAccountsId =accountService.getMyAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
+        List<Integer> listMyAccountsId =accountService.getMyAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
 
-        logger.info("listMyAccounts : "+listMyAccountsId);
+        logger.info("listMyAccountsId : "+listMyAccountsId);
 
         model.addAttribute("listMyAccountsId", listMyAccountsId);
 
-        List<String> listOtherAccountsId =accountService.getOtherAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
+        List<Integer> listOtherAccountsId =accountService.getOtherAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
 
-        logger.info("listMyAccounts : "+listOtherAccountsId);
+        logger.info("listOtherAccountsId : "+listOtherAccountsId);
 
         model.addAttribute("listOtherAccountsId", listOtherAccountsId);
 
