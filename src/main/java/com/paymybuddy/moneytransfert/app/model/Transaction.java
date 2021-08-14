@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
@@ -62,6 +63,7 @@ class Transaction {
 //			)
 	@JoinColumn(name="account_id")
 	@NotNull
+	@Size(max = 50)
 	private Account account;
 
 	@Transient

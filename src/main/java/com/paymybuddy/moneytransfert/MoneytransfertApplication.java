@@ -68,7 +68,7 @@ public class MoneytransfertApplication
 	@Override
 	public void run(String... args) throws Exception {
 
-		NewUser newUser2 = new NewUser("soufiene.mail_2@gmail.com","Sou2015","Sou2015", "Soufiene", "OUERTANI","soufiene.mail_2@gmail.com" );
+/*		NewUser newUser2 = new NewUser("soufiene.mail_2@gmail.com","Sou2015","Sou2015", "Soufiene", "OUERTANI","soufiene.mail_2@gmail.com" );
 		User theUser2 = userService.save(newUser2);
 		Client client2 = new Client(theUser2.getEmail(),theUser2.getLastName(),theUser2.getFirstName());
 		clientService.saveClient(client2);
@@ -85,7 +85,19 @@ public class MoneytransfertApplication
 		
 		Account accout2 = accountService.saveAccount(new Account("soufiene_Mail@gmail_2.com_1",200, client2));
 		Account accout3 = accountService.saveAccount(new Account("soufiene_Mail@gmail_3.com_1",300, client3));
-		Account accout4 = accountService.saveAccount(new Account("soufiene_Mail@gmail_4.com_1",400, client4));
+		Account accout4 = accountService.saveAccount(new Account("soufiene_Mail@gmail_4.com_1",400, client4));*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*		transactionService.saveTransaction(new Versement(accout2,250,"Versement1"));
 		transactionService.saveTransaction(new Retrait(accout2,50,"Virement1"));

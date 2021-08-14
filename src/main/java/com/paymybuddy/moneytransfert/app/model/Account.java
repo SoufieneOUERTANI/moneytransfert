@@ -57,6 +57,7 @@ public class Account {
 //	)
 	@JoinColumn(name="client_mail")
 	@NotNull
+	@Size(max = 50)
 	Client client;
 
 	@Transient
