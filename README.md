@@ -1,5 +1,29 @@
 "# moneytransfert" 
 
+<h3>Class Diagram :</h3>
+
+<div itemprop="text" class="Box-body p-0 blob-wrapper data type-text  gist-border-0">
+    <div class="text-center p-3">
+          <span class="border-wrap">
+            <img src="./src/main/resources/static/images/README/ClassDiagramsEntity.png?raw=true" alt="ClassDiagramsEntity.png">
+          </span>
+    </div>
+</div>
+
+<h3>MPD :</h3>
+
+<div itemprop="text" class="Box-body p-0 blob-wrapper data type-text  gist-border-0">
+    <div class="text-center p-3">
+          <span class="border-wrap">
+            <img src="./src/main/resources/static/images/README/MPD.png?raw=true" alt="MPD.png">
+          </span>
+    </div>
+</div>
+
+<h3>Fichiers sql :</h3>
+
+<a href=".\sql-scripts\InitTestsData.sql">InitTestsData.sql</a>
+
 <h3>0- Créer et connecter manuellement la base de données MySql</h3> 
 <div style="margin-left: 3em">
 1 : avec le nom "moneytransfert" avec aucune table dedans

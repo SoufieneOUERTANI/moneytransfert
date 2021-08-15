@@ -147,6 +147,13 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
+--+----------------------------+-----------+-----------------------------+
+--| user id                    | password  |            roles            |
+--+----------------------------+-----------+-----------------------------+
+--| soufiene.mail_01           | Sou2015   | ROLE_EMPLOYEE               |
+--| James.mail_02@gmail.com    | fun123    | ROLE_EMPLOYEE, ROLE_MANAGER |
+--+----------------------------+-----------+-----------------------------+
+
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES (1,'soufiene.mail_01@gmail.com','Soufiene','OUERTANI','$2a$10$fCFe3vct4X14KXAGGQ0gUueNXOvnjLpegXjR5gaykjkGq9ji3bXS6','soufiene.mail_01@gmail.com'),(2,'James.mail_02@gmail.com','James','pack','$2a$10$wKzg.amv98CayW3fP8EPg.Bdq1xwFbPGofLvM33gA55LHu2cR/DXe','James.mail_02@gmail.com');
