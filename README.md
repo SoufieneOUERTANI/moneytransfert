@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<h3>Fichiers sql :</h3>
+<h3>Fichiers sql de cration de la base de données et d'injection de données de test :</h3>
 
 <a href=".\sql-scripts\InitTestsData.sql">InitTestsData.sql</a>
 
