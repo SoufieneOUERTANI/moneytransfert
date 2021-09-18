@@ -1,10 +1,12 @@
-package com.paymybuddy.moneytransfert.app.repository;
+package com.paymybuddy.moneytransfert.app.controller;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AccountRepositoryTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class BankControllerTest {
 
     @BeforeEach
     void setUp() {
@@ -15,10 +17,6 @@ class AccountRepositoryTest {
     }
 
     @Test
-    void findByAccountId() {
-    }
-
-    @Test
-    void deleteByAccountId() {
+    void bankOperation() {
     }
 }

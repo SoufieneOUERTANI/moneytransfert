@@ -20,13 +20,13 @@
     </div>
 </div>
 
-<h3>Fichiers sql de cration de la base de données et d'injection de données de test :</h3>
+<h3>Fichiers sql de création de la base de données et d'injection de données de test :</h3>
 
 <a href=".\sql-scripts\InitTestsData.sql">InitTestsData.sql</a>
 
 <h3>0- Créer et connecter manuellement la base de données MySql</h3> 
 <div style="margin-left: 3em">
-1 : avec le nom "moneytransfert" avec aucune table dedans
+1 : Dans votre SGBD, créer une base de données avec le nom "moneytransfert" avec aucune table dedans
 
 2 : Mettre à jour le fichier application.properties avec le user et le mot de passe de la base de donnees
 
@@ -60,14 +60,14 @@ com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 
 3 : Redémarrer l'application
 
-3 : A la fin du lancement de l'application,vérifer que les données du fichier "data-init.sql" ont été bien injectées.
+4 : A la fin du lancement de l'application,vérifer que les données du fichier "data-update.sql" ont été bien injectées.
 
 </div>
 
 <h3>3- Recommenter la ligne </h3>
 <div style="margin-left: 3em">
 
-<b>#</b>spring.datasource.platform=init
+<b>#</b>spring.datasource.platform=update
 
 </div>
 
@@ -83,7 +83,7 @@ com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 => java -version
 <br><br>
 
-<b>Windows, connaitre le path de ja JVM en la ligne de commande</b><br>
+<b>Windows, connaitre le path de la JVM en la ligne de commande</b><br>
 => for %I in (java.exe) do @echo %~$PATH:I
 <br><br>
 
