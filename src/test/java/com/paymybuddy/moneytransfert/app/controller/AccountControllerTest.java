@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -99,6 +100,7 @@ class AccountControllerTest {
     private int port;
     */
 
+    @Autowired
     private MockMvc accountControllerMockMvc;
 
     @BeforeEach
@@ -128,7 +130,15 @@ class AccountControllerTest {
 
 
     @Test
-    void createAccount(){
+    void createAccount_NotAlreadyExist_isCreated() throws Exception {
+
+        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders
+                .post("/account/createAccount?accountId=8&accountMail=mail_Test_Creation@gmail.com")
+                //.content(tempFireStationJson)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
     }
 
 

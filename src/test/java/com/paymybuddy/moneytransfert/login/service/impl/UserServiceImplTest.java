@@ -61,15 +61,15 @@ class UserServiceImplTest {
         User tempUser = new User("userName", "password", "firstName","lastName", "email", Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
         logger.info(tempUser.toString());
 
-/*        RecursiveComparisonConfiguration configuration = RecursiveComparisonConfiguration.builder()
+        /*
+        RecursiveComparisonConfiguration configuration = RecursiveComparisonConfiguration.builder()
                 .withIgnoredFields("id","password")
-                .build();*/
+                .build();
+        Assertions.assertThat(user).usingRecursiveComparison(configuration).ignoringFields("id", "password").isEqualTo(tempUser);
+        */
 
-        //Assertions.assertThat(user).usingRecursiveComparison(configuration).ignoringFields("id", "password").isEqualTo(tempUser);
         Assertions.assertThat(user).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(tempUser);
 
-
-        //assertEquals(user.toString(), (new User("userName", "password", "firstName","lastName", "email", Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")))).toString());
     }
 
     @Test

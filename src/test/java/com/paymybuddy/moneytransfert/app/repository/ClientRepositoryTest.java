@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //@DataJpaTest did not work instead of @SpringBootTest
 @SpringBootTest
-//application-test.properties
+//_application-test.properties
 @ActiveProfiles("test")
 class ClientRepositoryTest {
 
