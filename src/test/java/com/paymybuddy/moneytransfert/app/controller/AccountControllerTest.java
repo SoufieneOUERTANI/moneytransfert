@@ -1,6 +1,16 @@
 package com.paymybuddy.moneytransfert.app.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.moneytransfert.MoneytransfertApplication;
+import com.paymybuddy.moneytransfert.login.dao.RoleDao;
+import com.paymybuddy.moneytransfert.login.entity.Role;
+import com.paymybuddy.moneytransfert.login.entity.User;
+import com.paymybuddy.moneytransfert.login.service.IUserService;
+import com.paymybuddy.moneytransfert.login.user.NewUser;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -20,6 +30,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -95,6 +112,12 @@ class AccountControllerTest {
     @Value("${currentapplicationproperties}")
     private String currentproperties;
 
+    @Autowired
+    RoleDao roleDao;
+
+    @Autowired
+    IUserService userService;
+
     /*
     @LocalServerPort
     private int port;
@@ -104,7 +127,18 @@ class AccountControllerTest {
     private MockMvc accountControllerMockMvc;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        Role role_employee = new Role("ROLE_EMPLOYEE");
+        roleDao.save(role_employee);
+        Role role_manager = new Role("ROLE_MANAGER");
+        roleDao.save(role_manager);
+        Role role_admin = new Role("ROLE_ADMIN");
+        roleDao.save(role_admin);
+        logger.info("roleDao.findAll() : "+ roleDao.findAll());
+
+        NewUser newUser = new NewUser("soufiene.mail_test@gmail.com", "Tes+2015", "Tes+2015", "firstName","lastName", "email");
+        User user = userService.save(newUser);
+
     }
 
     @AfterEach
@@ -112,8 +146,19 @@ class AccountControllerTest {
     }
 
     @Test
-    void testreources(){
+    void testreources() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
         logger.info("SOUE >>> currentproperties : "+currentproperties);
+        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders.post("/authenticateTheUser")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("username", "soufiene.mail_test@gmail.com"),
+                        new BasicNameValuePair("password", "Tes+2015")
+                )))))
+                .andExpect(status().isFound())
+                .andReturn();
+
     }
 
     @Test
@@ -130,15 +175,20 @@ class AccountControllerTest {
 
 
     @Test
-    void createAccount_NotAlreadyExist_isCreated() throws Exception {
+    void createAccount_NotAlreadyExist_isCreated()
+/*
+            throws Exception
+*/
+    {
 
-        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders
-                .post("/account/createAccount?accountId=8&accountMail=mail_Test_Creation@gmail.com")
+/*        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders
+                .post("/authenticateTheUser?accountId=8&accountMail=mail_Test_Creation@gmail.com")
                 //.content(tempFireStationJson)
+                .
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andReturn();
+                .andReturn();*/
     }
 
 
@@ -153,6 +203,5 @@ class AccountControllerTest {
     @Test
     void showFormForUpdate() {
     }
-
 
 }
