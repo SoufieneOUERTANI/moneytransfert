@@ -6,6 +6,9 @@ import com.paymybuddy.moneytransfert.login.entity.Role;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
 import com.paymybuddy.moneytransfert.login.user.NewUser;
+import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +23,10 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
+
+	private static final Logger logger = LogManager.getLogger("UserServiceImpl");
 
 	// need to inject user dao
 	@Autowired
@@ -42,6 +48,9 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional
 	public User save(NewUser newUser) {
+		if (newUser.getPassword() != newUser.getMatchingPassword()) {
+			throw new RuntimeException("La confirmation du mot de passe n'est pas identique");
+		}
 		User user = new User();
 		 // assign user details to the user object
 		user.setUserName(newUser.getUserName());
@@ -51,6 +60,7 @@ public class UserServiceImpl implements IUserService {
 		user.setEmail(newUser.getEmail());
 
 		// give user default role of "employee"
+		logger.info("roleDao.findRoleByName(\"ROLE_EMPLOYEE\") : "+roleDao.findRoleByName("ROLE_EMPLOYEE"));
 		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
 
 		 // save user in the database

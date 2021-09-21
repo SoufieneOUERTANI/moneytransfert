@@ -5,6 +5,7 @@ import com.paymybuddy.moneytransfert.app.service.IClientService;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
 import com.paymybuddy.moneytransfert.login.user.NewUser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 @Transactional
 @Controller
 @RequestMapping("/register")
+@RequiredArgsConstructor
 public class RegistrationController {
 	
     @Autowired
