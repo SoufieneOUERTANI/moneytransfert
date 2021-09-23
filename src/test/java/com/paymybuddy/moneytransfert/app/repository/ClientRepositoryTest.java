@@ -37,7 +37,7 @@ class ClientRepositoryTest {
 
     @Test
     @Order(1)
-    @Sql("classpath:sqlTestFolder/findByClientMail.sql")
+    @Sql("classpath:sqlTestFolder/_findByClientMail.sql")
     void findByClientMail() {
         assertNotNull(clientRepository.findByClientMail("soufiene_Mail@gmail_2.com"));
     }
@@ -55,7 +55,7 @@ class ClientRepositoryTest {
 
     @Test
     @Order(3)
-    @Sql("classpath:sqlTestFolder/deleteByClientMail.sql")
+    @Sql("classpath:sqlTestFolder/_deleteByClientMail.sql")
     void deleteByClientMail() {
         Client client = clientRepository.findByClientMail("soufiene_Mail@gmail_3.com");
         assertNotNull(client);

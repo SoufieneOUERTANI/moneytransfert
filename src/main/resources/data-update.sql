@@ -1,3 +1,7 @@
+-----------------------------------------------------------------------------------------------------
+-- This file is used in case of "spring.jpa.hibernate.ddl-auto = update" in application.properties --
+-- to init some data samples                                                                       --
+-----------------------------------------------------------------------------------------------------
 INSERT INTO role (name) VALUES ('ROLE_EMPLOYEE');
 INSERT INTO role (name) VALUES ('ROLE_MANAGER');
 INSERT INTO role (name) VALUES ('ROLE_ADMIN');

@@ -60,8 +60,10 @@ public class Account {
 	//@Size(max = 50)
 	Client client;
 
+	// To read the clientMail in the object(from the client field),
+	// to be able to pass it for the page like a model, with the right ClientMail
 	@Transient
-	String ClientMail;
+	String clientMail;
 
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	@CreationTimestamp

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+******************************************
+** This file is used to display the log **
+******************************************
+-->
+
 <configuration scan="true" scanPeriod="15 seconds">
 
     <property name="LOGS" value="./logs" />

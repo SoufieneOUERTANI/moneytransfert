@@ -20,11 +20,7 @@
     </div>
 </div>
 
-<h3>Fichiers sql de création de la base de données et d'injection de données de test :</h3>
-
-<a href=".\sql-scripts\InitTestsData.sql">InitTestsData.sql</a>
-
-<h3>0- Créer et connecter manuellement la base de données MySql</h3> 
+<h3>1- Créer et connecter manuellement la base de données MySql</h3> 
 <div style="margin-left: 3em">
 1 : Dans votre SGBD, créer une base de données avec le nom "moneytransfert" avec aucune table dedans
 
@@ -37,7 +33,7 @@ spring.datasource.password=
 com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 
 </div>
-<h3>1- Lancer l'application une première fois pour la création automatique des tables </h3> pour créer les tables de la base de donnée : Mettre à jour les paramètres suivants dans le fichier application.properties
+<h3>2.0- Création automatique des tables par Spring JPA </h3> pour créer les tables de la base de donnée : Mettre à jour les paramètres suivants dans le fichier application.properties
 
 <div style="margin-left: 3em">
 1 : Vérifier que la ligne suivante est à "create" : 
@@ -51,7 +47,22 @@ com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 
 </div>
 
-<h3>2- Redémarrer l'aplication, pour l'injection des données de sécurité</h3> avec les paramètres suivants :
+<h3>2.1- Création par script SQL </h3> 
+Pour créer les tables de la base de donnée : Mettre à jour les paramètres suivants dans le fichier application.properties
+
+<div style="margin-left: 3em">
+1 : Vérifier que la ligne suivante est à "create" : 
+<b>spring.jpa.hibernate.ddl-auto = create</b>
+
+2 : Vérifier que la ligne suivante est commentée (#) : <b>#</b>spring.datasource.platform=update
+
+3 : Lancer l'application
+
+4 : A la fin du lancement de l'application, vérifer la création des tables, des clés étrangères, des séquances
+
+</div>
+
+<h3>3- Redémarrer l'aplication, pour l'injection des données de sécurité</h3> avec les paramètres suivants :
 <div style="margin-left: 3em">
 
 1 : "update" : <b>spring.jpa.hibernate.ddl-auto = update</b>
@@ -64,16 +75,28 @@ com.paymybuddy.moneytransfert.app.config.DataBaseConfigTest
 
 </div>
 
-<h3>3- Recommenter la ligne </h3>
+<h3>4- Recommenter la ligne </h3>
 <div style="margin-left: 3em">
 
 <b>#</b>spring.datasource.platform=update
 
 </div>
 
+<h2>
 
-<h3>3- Annexe </h3>
+Fichier sql pour base de données MySql :
+</h2>
+
+<b>- Création de la base de données</b><br>
+<b>- injection de quelques données de test</b><br>
+
+<a href=".\sql-scripts\InitSchema&InjectSampleData.sql">InitSchema&InjectSampleData.sql</a>
+
+<h2>Annexe </h2>
 <div style="margin-left: 3em">
+
+
+
 
 <b>To run the app under command line</b><br>
 => mvn spring-boot:run

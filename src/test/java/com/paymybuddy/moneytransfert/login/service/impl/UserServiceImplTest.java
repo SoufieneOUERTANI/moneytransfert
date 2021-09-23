@@ -21,7 +21,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@TestPropertySource(value = "classpath:application-test.properties")
+@TestPropertySource(value = "classpath:application-test-H2.properties")
 class UserServiceImplTest {
 
     private static final Logger logger = LogManager.getLogger("UserServiceImplTest");

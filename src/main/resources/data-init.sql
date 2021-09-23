@@ -1,3 +1,7 @@
+--------------------------------------------------------------------------
+-- This file to init the database and populate it with some sample data --
+-- spring.datasource.platform=reset                                     --
+--------------------------------------------------------------------------
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: moneytransfert
@@ -14,6 +18,42 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Soufiene
+--
+DROP SCHEMA IF EXISTS moneytransfert;
+
+CREATE SCHEMA IF NOT EXISTS moneytransfert;
+
+USE moneytransfert;
+
+--
+-- Table structure for table `client`
+--
+
+DROP TABLE IF EXISTS `client`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `client` (
+  `client_mail` varchar(255) NOT NULL,
+  `adress` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`client_mail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `client`
+--
+
+LOCK TABLES `client` WRITE;
+/*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` VALUES ('james.mail_02@gmail.com',NULL,NULL,'James','pack'),('soufiene.mail_01@gmail.com',NULL,NULL,'Soufiene','OUERTANI');
+/*!40000 ALTER TABLE `client` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `account`
@@ -41,33 +81,6 @@ LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES (1,0,'2021-08-14 18:02:26.558000','soufiene.mail_01@gmail.com'),(2,50.25,'2021-08-14 18:14:26.845000','soufiene.mail_01@gmail.com'),(3,0,'2021-08-14 18:14:36.525000','soufiene.mail_01@gmail.com'),(4,0,'2021-08-14 20:18:21.062000','soufiene.mail_01@gmail.com'),(5,42.5,'2021-08-14 20:18:32.858000','james.mail_02@gmail.com'),(6,0,'2021-08-14 20:21:55.200000','soufiene.mail_01@gmail.com'),(7,0,'2021-08-14 20:22:02.259000','james.mail_02@gmail.com');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `client`
---
-
-DROP TABLE IF EXISTS `client`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `client` (
-  `client_mail` varchar(255) NOT NULL,
-  `adress` varchar(255) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`client_mail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `client`
---
-
-LOCK TABLES `client` WRITE;
-/*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES ('james.mail_02@gmail.com',NULL,NULL,'James','pack'),('soufiene.mail_01@gmail.com',NULL,NULL,'Soufiene','OUERTANI');
-/*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -147,12 +160,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
---+----------------------------+-----------+-----------------------------+
---| user id                    | password  |            roles            |
---+----------------------------+-----------+-----------------------------+
---| soufiene.mail_01@gmail.com | Sou2015   | ROLE_EMPLOYEE               |
---| James.mail_02@gmail.com    | fun123    | ROLE_EMPLOYEE, ROLE_MANAGER |
---+----------------------------+-----------+-----------------------------+
+-- +----------------------------+-----------+-----------------------------+
+-- | user id                    | password  |            roles            |
+-- +----------------------------+-----------+-----------------------------+
+-- | soufiene.mail_01@gmail.com | Sou2015   | ROLE_EMPLOYEE               |
+-- | James.mail_02@gmail.com    | fun123    | ROLE_EMPLOYEE, ROLE_MANAGER |
+-- +----------------------------+-----------+-----------------------------+
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;

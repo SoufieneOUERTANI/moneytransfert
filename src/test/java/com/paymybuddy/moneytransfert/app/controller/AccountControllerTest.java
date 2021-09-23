@@ -3,7 +3,11 @@ package com.paymybuddy.moneytransfert.app.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.moneytransfert.MoneytransfertApplication;
+import com.paymybuddy.moneytransfert.app.model.Account;
+import com.paymybuddy.moneytransfert.app.repository.AccountRepository;
+import com.paymybuddy.moneytransfert.login.controller.RegistrationController;
 import com.paymybuddy.moneytransfert.login.dao.RoleDao;
+import com.paymybuddy.moneytransfert.login.dao.RoleDaoImpl;
 import com.paymybuddy.moneytransfert.login.entity.Role;
 import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
@@ -13,9 +17,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,15 +28,23 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -103,14 +113,24 @@ class SpringBootPropertiesTest {
 //@TestPropertySource(locations = "classpath:_application-test.properties")
 //@PropertySource(value = "classpath:_application-test.properties", ignoreResourceNotFound = true)
 
-@TestPropertySource(value = "classpath:application-test.properties")
-
+@TestPropertySource(value = "classpath:application-test-MYSQL.properties")
 class AccountControllerTest {
 
     private static final Logger logger = LogManager.getLogger("AccountControllerTest");
 
+    /*
+    @LocalServerPort
+    private int port;
+    */
+
     @Value("${currentapplicationproperties}")
     private String currentproperties;
+
+    //private int NumberTest = 0;
+    private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss-SSS");
+    private Timestamp timestamp;
+    private String testMail;
+    NewUser newUser;
 
     @Autowired
     RoleDao roleDao;
@@ -118,47 +138,58 @@ class AccountControllerTest {
     @Autowired
     IUserService userService;
 
-    /*
-    @LocalServerPort
-    private int port;
-    */
+    @Autowired
+    AccountController accountController;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    RegistrationController registrationController;
+
 
     @Autowired
     private MockMvc accountControllerMockMvc;
 
+    @BeforeAll
+    //@Sql(scripts = "classpath:sqlTestFolder/insertRoles.sql", statements = "delete from role", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    static void beforeAll() {
+    }
+
+    @AfterAll
+    static void afterAll() {
+    }
+
     @BeforeEach
     void setUp() throws Exception {
-        Role role_employee = new Role("ROLE_EMPLOYEE");
-        roleDao.save(role_employee);
-        Role role_manager = new Role("ROLE_MANAGER");
-        roleDao.save(role_manager);
-        Role role_admin = new Role("ROLE_ADMIN");
-        roleDao.save(role_admin);
-        logger.info("roleDao.findAll() : "+ roleDao.findAll());
+        //
+        logger.info("SOUE >>> currentproperties : " + currentproperties);
 
-        NewUser newUser = new NewUser("soufiene.mail_test@gmail.com", "Tes+2015", "Tes+2015", "firstName","lastName", "email");
-        User user = userService.save(newUser);
+        // Create the mail for the new user
+        timestamp = new Timestamp(System.currentTimeMillis());
+        testMail = "mail"+sdf2.format(timestamp)+"@mail.com";
+        logger.info("testMail : "+testMail);
 
-    }
+        // Create the new user
+        newUser = new NewUser(testMail, "Tes+2015", "Tes+2015", "firstName", "lastName", testMail);
+        logger.info("newUser : "+newUser);
 
-    @AfterEach
-    void tearDown() {
-    }
+        // Register the new user
+        registrationController.processRegistrationForm(newUser, null, null);
 
-    @Test
-    void testreources() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
-        logger.info("SOUE >>> currentproperties : "+currentproperties);
+        // connect with the new user
         MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders.post("/authenticateTheUser")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
-                        new BasicNameValuePair("username", "soufiene.mail_test@gmail.com"),
+                        new BasicNameValuePair("username", testMail),
                         new BasicNameValuePair("password", "Tes+2015")
                 )))))
                 .andExpect(status().isFound())
                 .andReturn();
+    }
 
+    @AfterEach
+    void tearDown() {
     }
 
     @Test
@@ -173,24 +204,63 @@ class AccountControllerTest {
     void showNewAccountForm() {
     }
 
-
     @Test
-    void createAccount_NotAlreadyExist_isCreated()
-/*
-            throws Exception
-*/
+    void createAccount_CreateAccountExistingClient_isCreated() throws Exception
     {
+        // create account
+        List <Account> tempListAccount;
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),0);
+        logger.info("testMail : "+testMail);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),1);
+        Account currentAccount = accountRepository.findByClientClientMail(testMail)
+                .stream()
+                .findFirst()
+                .orElse(null);
 
-/*        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders
-                .post("/authenticateTheUser?accountId=8&accountMail=mail_Test_Creation@gmail.com")
-                //.content(tempFireStationJson)
-                .
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();*/
+        logger.info("currentAccount.getClient().getClientMail() : "+currentAccount.getClient().getClientMail());
+
+        assertEquals(currentAccount.getClient().getClientMail().toString(),testMail.toString());
     }
 
+    @Test
+    void createAccount_CreateAccountForNonExistingClient_Error() throws Exception
+    {
+        //
+        List <Account> tempListAccount;
+        tempListAccount = accountRepository.findByClientClientMail("soufiene.mail_test@gmail.com");
+        assertEquals(tempListAccount.size(),0);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            accountController.createAccount(null, "soufiene.mail_testNonExisting@gmail.com");
+        });
+
+        String expectedMessage = "No client for this mail";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+        tempListAccount = accountRepository.findByClientClientMail("soufiene.mail_test@gmail.com");
+        assertEquals(tempListAccount.size(),0);
+    }
+
+    @Test
+    void createAccount_CreateManyAccountForTheSameExistingClient_isCreated() throws Exception
+    {
+        //
+        List <Account> tempListAccount;
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),0);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),1);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),2);
+
+    }
 
     @Test
     void updateAccount() {

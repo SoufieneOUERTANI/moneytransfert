@@ -58,7 +58,7 @@ public class RegistrationController {
 		logger.info("Processing registration form for: " + userName);
 		
 		// form validation
-		 if (theBindingResult.hasErrors()){
+		 if (theBindingResult != null && theBindingResult.hasErrors()){
 			 return "registration-form";
 	        }
 
