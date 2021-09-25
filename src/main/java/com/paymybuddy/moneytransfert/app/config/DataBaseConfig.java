@@ -2,21 +2,38 @@ package com.paymybuddy.moneytransfert.app.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
+@Component
 public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String springDatasourceDriverClassName;
+
+    @Value("${spring.datasource.url}")
+    private String springDatasourceUrl;
+
+    @Value("${spring.datasource.username}")
+    private String springDatasourceUsername;
+
+    @Value("${spring.datasource.password}")
+    private String springDatasourcePassword;
     
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName(springDatasourceDriverClassName);
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/moneytransfert?serverTimezone=UTC","root","Sql2015");
+                springDatasourceUrl,springDatasourceUsername,springDatasourcePassword);
 
     }
+
+    /*
 
     public void closeConnection(Connection con){
         if(con!=null){
@@ -50,4 +67,7 @@ public class DataBaseConfig {
             }
         }
     }
+
+    */
+
 }

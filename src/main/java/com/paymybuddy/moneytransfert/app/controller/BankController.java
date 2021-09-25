@@ -40,19 +40,17 @@ public class BankController {
         try {
 
             if (operationType.equals("Vers")) {
-                logger.info("operationType : " + operationType);
-
+                logger.info("operationType : Vers " + operationType);
                 banckServices.verser(myAccount, transactionAmount, transactionSourceLabel);
             }
 
             if (operationType.equals("Retr")) {
-                logger.info("operationType : " + operationType);
-
+                logger.info("operationType : Retr " + operationType);
                 banckServices.retirer(model, myAccount, transactionAmount, transactionSourceLabel);
             }
 
             if (operationType.equals("Vire")) {
-                logger.info("operationType : " + operationType);
+                logger.info("operationType : Vire " + operationType);
                 banckServices.virer(model, myAccount, accountId, transactionAmount, transactionSourceLabel);
             }
         } catch (Exception e) {
