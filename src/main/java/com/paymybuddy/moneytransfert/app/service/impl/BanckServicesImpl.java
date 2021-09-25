@@ -68,7 +68,7 @@ public class BanckServicesImpl implements IBanckServices {
             throw new RuntimeException("Vérifier le compte à débiter");
         }
         if (account.getBalance() < ammount * 1.05) {
-            logger.info(">>> SOUE \"Solde insuffisant\" : ");
+            logger.info(">>> SOUE 'Solde insuffisant' : ");
             throw new RuntimeException("Solde insuffisant");
         }
         Retrait retrait = new Retrait(account, (float) (ammount * 1.05), labbel);

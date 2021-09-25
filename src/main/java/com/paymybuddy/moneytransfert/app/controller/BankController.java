@@ -17,9 +17,9 @@ public class BankController {
     IBanckServices banckServices;
 
     @PostMapping("/bank/operation")
-    public String bankOperation(Model model, String myAccountString, String accountIdString, int transactionAmount, String transactionSourceLabel, String OperationType) {
+    public String bankOperation(Model model, String myAccountString, String accountIdString, int transactionAmount, String transactionSourceLabel, String operationType) {
 
-        logger.info("OperationType : " + OperationType);
+        logger.info("operationType : " + operationType);
         logger.info("myAccountString : " + myAccountString);
         logger.info("accountIdString : " + accountIdString);
         logger.info("transactionAmount : " + transactionAmount);
@@ -39,25 +39,26 @@ public class BankController {
 
         try {
 
-            if (OperationType.equals("Vers")) {
-                logger.info("OperationType : " + OperationType);
+            if (operationType.equals("Vers")) {
+                logger.info("operationType : " + operationType);
 
                 banckServices.verser(myAccount, transactionAmount, transactionSourceLabel);
             }
 
-            if (OperationType.equals("Retr")) {
-                logger.info("OperationType : " + OperationType);
+            if (operationType.equals("Retr")) {
+                logger.info("operationType : " + operationType);
 
                 banckServices.retirer(model, myAccount, transactionAmount, transactionSourceLabel);
             }
 
-            if (OperationType.equals("Vire")) {
-                logger.info("OperationType : " + OperationType);
+            if (operationType.equals("Vire")) {
+                logger.info("operationType : " + operationType);
                 banckServices.virer(model, myAccount, accountId, transactionAmount, transactionSourceLabel);
             }
         } catch (Exception e) {
             logger.info("e.getMessage() : "+e.getMessage());
-            model.addAttribute("error", e);
+            if(model != null)
+                model.addAttribute("error", e);
             return "redirect:/transaction"+"?error="+e.getMessage();
         }
         return "redirect:/transaction";

@@ -30,7 +30,7 @@ public class AccountController {
     // display list of accounts
     @GetMapping("/account")
     public String viewHomePage(Model model) {
-        return(findPaginated(1, "creationDate", "desc", model));
+        return findPaginated(1, "creationDate", "desc", model);
     }
 
     // display list of accounts

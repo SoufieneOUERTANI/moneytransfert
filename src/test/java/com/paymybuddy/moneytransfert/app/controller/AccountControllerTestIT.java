@@ -114,9 +114,9 @@ class SpringBootPropertiesTest {
 //@PropertySource(value = "classpath:_application-test.properties", ignoreResourceNotFound = true)
 
 @TestPropertySource(value = "classpath:application-test-MYSQL.properties")
-class AccountControllerTest {
+class AccountControllerTestIT {
 
-    private static final Logger logger = LogManager.getLogger("AccountControllerTest");
+    private static final Logger logger = LogManager.getLogger("AccountControllerTestIT");
 
     /*
     @LocalServerPort
@@ -147,12 +147,11 @@ class AccountControllerTest {
     @Autowired
     RegistrationController registrationController;
 
-
     @Autowired
     private MockMvc accountControllerMockMvc;
 
     @BeforeAll
-    //@Sql(scripts = "classpath:sqlTestFolder/insertRoles.sql", statements = "delete from role", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    //@Sql(scripts = "classpath:sqlTestFolder/_insertRoles.sql", statements = "delete from role", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     static void beforeAll() {
     }
 
@@ -167,7 +166,7 @@ class AccountControllerTest {
 
         // Create the mail for the new user
         timestamp = new Timestamp(System.currentTimeMillis());
-        testMail = "mail"+sdf2.format(timestamp)+"@mail.com";
+        testMail = ("mail"+sdf2.format(timestamp)+"@mail.com").toLowerCase();
         logger.info("testMail : "+testMail);
 
         // Create the new user
@@ -222,7 +221,7 @@ class AccountControllerTest {
 
         logger.info("currentAccount.getClient().getClientMail() : "+currentAccount.getClient().getClientMail());
 
-        assertEquals(currentAccount.getClient().getClientMail().toString(),testMail.toString());
+        assertEquals(testMail.toString(),currentAccount.getClient().getClientMail().toString());
     }
 
     @Test
