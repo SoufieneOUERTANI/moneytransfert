@@ -163,7 +163,7 @@ CREATE TABLE `user` (
 -- | user id                    | password  |            roles            |
 -- +----------------------------+-----------+-----------------------------+
 -- | soufiene.mail_01@gmail.com | Sou2015   | ROLE_EMPLOYEE               |
--- | James.mail_02@gmail.com    | fun123    | ROLE_EMPLOYEE, ROLE_MANAGER |
+-- | James.mail_02@gmail.com    | Jam2015   | ROLE_EMPLOYEE, ROLE_MANAGER |
 -- +----------------------------+-----------+-----------------------------+
 
 LOCK TABLES `user` WRITE;

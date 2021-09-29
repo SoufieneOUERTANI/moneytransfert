@@ -73,10 +73,10 @@ public class TransactionController {
         logger.info("Hello1");
 
         int pageSize = 3;
-        Page<Transaction> page = transactionService.findPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
-        logger.info("Hello2");
+        //Page<Transaction> page = transactionService.findPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
+        //logger.info("Hello2");
 
-        List<Transaction> listTransactions = page.getContent();
+        //List<Transaction> listTransactions = page.getContent();
 
         Page<Transaction> myPage = transactionService.findMyPaginatedTransactions(pageNo, pageSize, sortField, sortDir);
         logger.info("Hello2");
@@ -85,9 +85,9 @@ public class TransactionController {
         model.addAttribute("listMyTransactions", listMyTransactions);
         logger.info("Hello3");
 
-        List<Account> listAccounts = accountService.getAccounts();
-        List<Integer> listAccountsId = listAccounts.stream().map(x -> x.getAccountId()).collect(Collectors.toList());
-        logger.info("Hello4 listAccountsId : "+listAccountsId);
+        //List<Account> listAccounts = accountService.getAccounts();
+        //List<Integer> listAccountsId = listAccounts.stream().map(x -> x.getAccountId()).collect(Collectors.toList());
+        //logger.info("Hello4 listAccountsId : "+listAccountsId);
 
         //logger.info("SOUE >>> page.getContent() : "+ page.getContent());
 
@@ -106,12 +106,12 @@ public class TransactionController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         logger.info("Hello8");
 
-        model.addAttribute("listTransactions", listTransactions);
-        logger.info("Hello9");
+        //model.addAttribute("listTransactions", listTransactions);
+        //logger.info("Hello9");
 
-        model.addAttribute("listAccountsId", listAccountsId);
+        //model.addAttribute("listAccountsId", listAccountsId);
 
-        logger.info("Hello10");
+        //logger.info("Hello10");
 
 
         List<Integer> listMyAccountsId =accountService.getMyAccounts().stream().map(x-> x.getAccountId()).collect(Collectors.toList());
@@ -146,13 +146,13 @@ public class TransactionController {
         return "redirect:/transaction";
     }
 
-    @GetMapping("/transaction/deleteTransaction/{id}")
+/*    @GetMapping("/transaction/deleteTransaction/{id}")
     public String deleteTransaction(@PathVariable (value = "id") int id) {
 
         // call delete transaction method
         this.transactionService.deleteTransactionById(id);
         return "redirect:/transaction";
-    }
+    }*/
 
     @GetMapping("/transaction/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") int id, Model model) {

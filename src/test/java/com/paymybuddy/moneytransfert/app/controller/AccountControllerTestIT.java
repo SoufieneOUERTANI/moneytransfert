@@ -1,60 +1,30 @@
 package com.paymybuddy.moneytransfert.app.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paymybuddy.moneytransfert.MoneytransfertApplication;
 import com.paymybuddy.moneytransfert.app.model.Account;
 import com.paymybuddy.moneytransfert.app.repository.AccountRepository;
 import com.paymybuddy.moneytransfert.login.controller.RegistrationController;
 import com.paymybuddy.moneytransfert.login.dao.RoleDao;
-import com.paymybuddy.moneytransfert.login.dao.RoleDaoImpl;
-import com.paymybuddy.moneytransfert.login.entity.Role;
-import com.paymybuddy.moneytransfert.login.entity.User;
 import com.paymybuddy.moneytransfert.login.service.IUserService;
 import com.paymybuddy.moneytransfert.login.user.NewUser;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Filter;
-import org.hibernate.Session;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -157,7 +127,7 @@ class AccountControllerTestIT {
     RegistrationController registrationController;
 
     @Autowired
-    private MockMvc accountControllerMockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     EntityManager entityManager;
@@ -283,7 +253,7 @@ class AccountControllerTestIT {
     void findPaginated() throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         logger.info("\n=====>>> authentication : "+authentication);
-        this.accountControllerMockMvc.perform(
+        this.mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/account/page/1?sortField=accountId&sortDir='desc'")
                         .with(SecurityMockMvcRequestPostProcessors.user("soufiene.mail_01@gmail.com").roles("EMPLOYEE"))
@@ -298,7 +268,7 @@ class AccountControllerTestIT {
     @WithMockUser(username = "soufiene.mail_01@gmail.com", roles ={"EMPLOYEE"})
     void showNewAccountForm() throws Exception {
 
-        this.accountControllerMockMvc.perform(
+        this.mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/account/showNewAccountForm")
                         //.with(SecurityMockMvcRequestPostProcessors.user("soufiene.mail_01@gmail.com").roles("EMPLOYEE"))
@@ -313,7 +283,7 @@ class AccountControllerTestIT {
     @WithMockUser(username = "soufiene.mail_01@gmail.com", roles ={"EMPLOYEE"})
     void showFormForUpdate() throws Exception {
 
-        this.accountControllerMockMvc.perform(
+        this.mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/account/showFormForUpdate/1")
                         //.with(SecurityMockMvcRequestPostProcessors.user("soufiene.mail_01@gmail.com").roles("EMPLOYEE"))
