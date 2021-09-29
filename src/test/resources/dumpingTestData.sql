@@ -40,6 +40,8 @@ commit;
 -- Dumping data for table `transaction`
 --
 
+
+
 LOCK TABLES `transaction` WRITE;
 ALTER TABLE `transaction` DISABLE KEYS;
 -- delete from `transaction`;

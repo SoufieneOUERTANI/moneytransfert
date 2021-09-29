@@ -24,7 +24,6 @@ public class AllAspect {
 	@Autowired
 	EntityManager entityManager;
 
-	@Async
 	@Before("execution(* findPaginatedAccountService(..))")
 	public void beforeFindPaginatedAccountService() {
 
