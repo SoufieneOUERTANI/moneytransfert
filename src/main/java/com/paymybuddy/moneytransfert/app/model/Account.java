@@ -103,7 +103,7 @@ public class Account {
 //	List<Transaction> destinationTransactions;
 
 
-	// override without the "List<Transaction> transactions" .. Else infinite loop
+/*	// override without the "List<Transaction> transactions" .. Else infinite loop
 	@Override
 	public String toString() {
 		return "Account{" +
@@ -112,29 +112,20 @@ public class Account {
 				", creationDate=" + creationDate +
 				", balance=" + balance +
 				'}';
-	}
+	}*/
 
 	public Account(Client client) {
 		this.client = client;
 	}
 
-	public Account(int accountId, Client client) {
+/*	public Account(int accountId, Client client) {
 		this(client);
 		this.accountId = accountId;
-/*		Query q = entityManager.createNativeQuery("SELECT a.account_id FROM account a WHERE a.client_mail = :client_mail");
-		q.setParameter("id", client.getClientMail());
-		//Object[] accountIds = (Object[]) q.getSingleResult();
-		List<String> accountIds = (List<String>) q.getSingleResult();
-		Long max = accountIds.stream().map( o -> o.split("-")[0])
-          .mapToLong(Long::parseLong)
-          .max()
-          .orElse(0L);
-		this.accountId = max + "-" + client;*/
-	}
+	}*/
 
-	public Account(int accountId, Client client, int balance ) {
+/*	public Account(int accountId, Client client, int balance ) {
 		this(accountId, client);
 		this.balance = balance;
-	}
+	}*/
 
 }

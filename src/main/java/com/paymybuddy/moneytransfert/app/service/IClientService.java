@@ -14,7 +14,9 @@ public interface IClientService {
 
 	public Client saveClient(Client client);
 
+/*
 	public void deleteByClientId(String clientId);
+*/
 
 	public Page<Client> findPaginated(int pageNo, int page, String sortField, String sortDirection);
 

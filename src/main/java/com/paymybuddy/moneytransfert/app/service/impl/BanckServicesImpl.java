@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
-//@Transactional
 @Service
 public class BanckServicesImpl implements IBanckServices {
 

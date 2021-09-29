@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.logging.Logger;
 
-@Transactional
+//SOUETransactional
 @Controller
 @RequestMapping("/register")
 @RequiredArgsConstructor
@@ -48,6 +48,7 @@ public class RegistrationController {
 		return "registration-form";
 	}
 
+	@Transactional
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(
 				@Valid @ModelAttribute("newUser") NewUser theNewUser, 
@@ -72,7 +73,7 @@ public class RegistrationController {
         	return "registration-form";
         }
         
-        // create user account        						
+        // create user account
         userService.save(theNewUser);
         Client client = new Client(theNewUser.getEmail(),theNewUser.getLastName(),theNewUser.getFirstName());
 		clientService.saveClient(client);

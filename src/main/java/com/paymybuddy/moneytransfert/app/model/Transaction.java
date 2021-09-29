@@ -140,7 +140,7 @@ class Transaction {
 		this.sourceLabbel = sourceLabbel;
 	}
 
-	@Override
+/*	@Override
 	public String toString() {
 		return "Transaction{" +
 				"transactionId=" + transactionId +
@@ -153,5 +153,5 @@ class Transaction {
 				", sourceLabbel='" + sourceLabbel + '\'' +
 				", transactionStatus=" + transactionStatus +
 				'}';
-	}
+	}*/
 }

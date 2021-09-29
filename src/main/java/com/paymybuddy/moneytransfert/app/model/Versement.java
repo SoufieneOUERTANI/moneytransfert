@@ -21,12 +21,12 @@ public class Versement extends Transaction{
         super(account, transactionAmount, sourceLabbel);
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Versement{" +
                 "clientMail='" + clientMail + '\'' +
                 "} " + super.toString();
-    }
+    }*/
 
 /*    @Column(name="transaction_type", insertable = false, updatable = false)
     protected int transactionType;*/

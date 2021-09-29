@@ -17,6 +17,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -38,6 +45,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -150,6 +158,9 @@ class AccountControllerTestIT {
     @Autowired
     private MockMvc accountControllerMockMvc;
 
+    @Autowired
+    EntityManager entityManager;
+
     @BeforeAll
     //@Sql(scripts = "classpath:sqlTestFolder/_insertRoles.sql", statements = "delete from role", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     static void beforeAll() {
@@ -160,6 +171,8 @@ class AccountControllerTestIT {
     }
 
     @BeforeEach
+    //SOUE
+    @Async
     void setUp() throws Exception {
         //
         logger.info("SOUE >>> currentproperties : " + currentproperties);
@@ -174,9 +187,11 @@ class AccountControllerTestIT {
         logger.info("newUser : "+newUser);
 
         // Register the new user
+        logger.info("SOUE >>> registrationController : ");
         registrationController.processRegistrationForm(newUser, null, null);
 
-        // connect with the new user
+/*        // connect with the new user
+        logger.info("\nSOUE >>> accountControllerMockMvc");
         MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders.post("/authenticateTheUser")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
@@ -185,22 +200,14 @@ class AccountControllerTestIT {
                 )))))
                 .andExpect(status().isFound())
                 .andReturn();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("\n=====>>> authentication : "+authentication);*/
+
     }
 
     @AfterEach
     void tearDown() {
-    }
-
-    @Test
-    void viewHomePage() {
-    }
-
-    @Test
-    void findPaginated() {
-    }
-
-    @Test
-    void showNewAccountForm() {
     }
 
     @Test
@@ -245,6 +252,7 @@ class AccountControllerTestIT {
         assertEquals(tempListAccount.size(),0);
     }
 
+
     @Test
     void createAccount_CreateManyAccountForTheSameExistingClient_isCreated() throws Exception
     {
@@ -262,15 +270,90 @@ class AccountControllerTestIT {
     }
 
     @Test
-    void updateAccount() {
-    }
-
-    @Test
+    @Sql(scripts = "/dumpingTestData.sql")
     void deleteAccount() {
+        List <Account> tempListAccount;
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),0);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),1);
+
+        Account currentAccount = accountRepository.findByClientClientMail(testMail)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        accountController.deleteAccount(currentAccount.getAccountId());
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),0);
+
     }
 
     @Test
-    void showFormForUpdate() {
+    //SOUE
+    @Async
+    //@Sql(scripts = "/dumpingTestData.sql")
+
+    @WithMockUser(username = "soufiene.mail_01@gmail.com", roles ={"EMPLOYEE"})
+    void findPaginated() throws Exception {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("\n=====>>> authentication : "+authentication);
+
+/*        MvcResult mvcResult = accountControllerMockMvc.perform(MockMvcRequestBuilders.post("/authenticateTheUser")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("username", testMail),
+                        new BasicNameValuePair("password", "Tes+2015")
+                )))))
+                .andExpect(status().isFound())
+                .andReturn();*/
+
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("\n=====>>> authentication : "+authentication);
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Filter filter = currentSession.enableFilter("accountFilter");
+
+        /*
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            logger.info("currentUserName-AccountServiceImpl : "+currentUserName);
+            //filter.setParameter("userMail", currentUserName );
+            filter.setParameter("userMail", currentUserName );
+        }
+        //return this.accountRepository.findAll(pageable);
+        else{
+            filter.setParameter("userMail", "" );
+            logger.info("\n=====>>> Fail identifying userMail");
+        }
+*/
+
+        List <Account> tempListAccount;
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),0);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),1);
+        accountController.createAccount(null, testMail);
+        tempListAccount = accountRepository.findByClientClientMail(testMail);
+        assertEquals(tempListAccount.size(),2);
+
+        this.accountControllerMockMvc.perform(MockMvcRequestBuilders.get("/account/page/1?sortField=accountId&sortDir='desc'")
+        /*
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("username", testMail),
+                        new BasicNameValuePair("password", "Tes+2015")
+                ))))
+        */
+        )
+                .andExpect(status().isFound())
+                .andReturn();
     }
+
 
 }

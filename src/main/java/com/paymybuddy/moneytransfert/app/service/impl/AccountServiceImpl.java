@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-@Transactional
+//SOUETransactional
 @Service
 public class AccountServiceImpl implements IAccountService {
 
@@ -79,6 +79,7 @@ public class AccountServiceImpl implements IAccountService {
 
     public Account getAccountByAccountId(int accountId){ return accountRepository.findByAccountId(accountId); }
 
+    @Transactional
     public Account saveAccount(Account account) {
         account.setClientMail(account.getClient().getClientMail());
 

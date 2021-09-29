@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 
 import com.paymybuddy.moneytransfert.app.model.Account;
 
-
 public interface IAccountService {
 
 	public List<Account> getAccounts();

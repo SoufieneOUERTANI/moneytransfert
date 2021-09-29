@@ -126,8 +126,6 @@ public class TransactionController {
 
         model.addAttribute("listOtherAccountsId", listOtherAccountsId);
 
-
-
         return "transactions";
     }
 

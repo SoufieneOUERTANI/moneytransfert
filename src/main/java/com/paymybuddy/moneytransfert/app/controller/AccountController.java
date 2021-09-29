@@ -40,6 +40,8 @@ public class AccountController {
                                 @RequestParam("sortDir") String sortDir,
                                 Model model ) {
         int pageSize = 3;
+        logger.info("SOUE >>> pageNo, pageSize, sortField, sortDir : "+ pageNo+"-"+ pageSize+"-"+ sortField+"-"+ sortDir);
+
         Page<Account> page = accountService.findPaginatedAccountService(pageNo, pageSize, sortField, sortDir);
         List<Account> listAccounts = page.getContent();
 
@@ -104,16 +106,19 @@ public class AccountController {
             throw new RuntimeException("Account already exists");*/
     }
 
+/*
     @PostMapping("/account/updateAccount")
     public String updateAccount(
             @ModelAttribute("account") Account account
 //            //,
 //            @RequestParam(name = "accountId") String accountId, @RequestParam(name = "accountMail") String accountMail
     ) {
+*/
 /*        if(accountId.substring(0,5).equals("null,"))
             accountId = accountId.substring(5);
         if(accountMail.substring(0,5).equals("null,"))
-            accountMail = accountMail.substring(5);*/
+            accountMail = accountMail.substring(5);*//*
+
 
         Client client = clientService.getClientByClientMail(account.getClientMail());
         account = accountService.getAccountByAccountId(account.getAccountId());
@@ -126,6 +131,7 @@ public class AccountController {
         return "redirect:/account";
 
     }
+*/
 
 
     @GetMapping("/account/deleteAccount/{id}")

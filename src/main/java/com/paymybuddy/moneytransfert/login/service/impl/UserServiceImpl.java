@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	@Transactional
+	//SOUETransactional
 	public User findByUserName(String userName) {
 		// check the database if the user already exists
 		return userDao.findByUserName(userName);
@@ -69,7 +69,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	@Transactional
+	//SOUETransactional
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		User user = userDao.findByUserName(userName);
 		if (user == null) {

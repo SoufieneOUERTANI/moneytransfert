@@ -20,12 +20,12 @@ public class Retrait extends Transaction{
         super(account, transactionAmount, sourceLabbel);
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Retrait{" +
                 "clientMail='" + clientMail + '\'' +
                 "} " + super.toString();
-    }
+    }*/
 
 /*    @Column(name="transaction_type", insertable = false, updatable = false)
     protected int transactionType;*/

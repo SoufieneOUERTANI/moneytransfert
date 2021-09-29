@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,12 +24,15 @@ public class AllAspect {
 	@Autowired
 	EntityManager entityManager;
 
+	@Async
 	@Before("execution(* findPaginatedAccountService(..))")
 	public void beforeFindPaginatedAccountService() {
 
 		logger.info("\n=====>>> Executing @Before advice on addAccount()");
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		logger.info("\n=====>>> authentication : "+authentication);
+
 		Session currentSession = entityManager.unwrap(Session.class);
 
 		Filter filter = currentSession.enableFilter("accountFilter");
@@ -41,7 +45,8 @@ public class AllAspect {
 		}
 		//return this.accountRepository.findAll(pageable);
 		else{
-			filter.setParameter("userMail", null );
+			filter.setParameter("userMail", "" );
+			logger.info("\n=====>>> Fail identifying userMail");
 		}
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+//SOUETransactional
 @Service
 public class ClientServiceImpl implements IClientService {
 
@@ -33,14 +33,16 @@ public class ClientServiceImpl implements IClientService {
         logger.info("SOUE3 >>> clientId : "+clientRepository.findByClientMail(clientMail));
 
         return clientRepository.findByClientMail(clientMail); }
-
+    @Transactional
     public Client saveClient(Client client) {
         return clientRepository.save(client);
     }
 
+/*
     public void deleteByClientId(String clientId) {
         clientRepository.deleteById(clientId);
     }
+*/
 
     //Pagination
 
