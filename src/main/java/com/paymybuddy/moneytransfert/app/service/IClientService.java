@@ -16,8 +16,8 @@ public interface IClientService {
 
 /*
 	public void deleteByClientId(String clientId);
-*/
+
 
 	public Page<Client> findPaginated(int pageNo, int page, String sortField, String sortDirection);
-
+*/
 }

@@ -42,7 +42,7 @@ public class ClientServiceImpl implements IClientService {
     public void deleteByClientId(String clientId) {
         clientRepository.deleteById(clientId);
     }
-*/
+
 
     //Pagination
 
@@ -55,5 +55,6 @@ public class ClientServiceImpl implements IClientService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.clientRepository.findAll(pageable);
     }
+    */
 
 }

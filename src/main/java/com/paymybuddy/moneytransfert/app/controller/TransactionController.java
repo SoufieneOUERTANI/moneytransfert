@@ -139,12 +139,14 @@ public class TransactionController {
     }
 
 
+    /*
     @PostMapping("/transaction/saveTransaction")
     public String saveTransaction(@ModelAttribute("transaction") Transaction transaction){
         logger.info("SOUE2 >>> transaction : " + transaction);
         transactionService.saveTransaction(transaction);
         return "redirect:/transaction";
     }
+    */
 
 /*    @GetMapping("/transaction/deleteTransaction/{id}")
     public String deleteTransaction(@PathVariable (value = "id") int id) {
@@ -152,7 +154,7 @@ public class TransactionController {
         // call delete transaction method
         this.transactionService.deleteTransactionById(id);
         return "redirect:/transaction";
-    }*/
+    }
 
     @GetMapping("/transaction/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") int id, Model model) {
@@ -197,4 +199,5 @@ public class TransactionController {
 
         return "transaction-details";
     }
+    */
 }

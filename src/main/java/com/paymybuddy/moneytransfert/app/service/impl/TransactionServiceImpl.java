@@ -37,6 +37,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Autowired
     private IAccountService accountService;
 
+/*
     public Iterable<Transaction> getTransactions() {
         return transactionRepository.findAll();
     }
@@ -60,6 +61,8 @@ public class TransactionServiceImpl implements ITransactionService {
     public Optional<Transaction> getTransactionById(Integer id) {
         return transactionRepository.findById(id);
     }
+*/
+    /*
 
     public Transaction saveTransaction(Transaction transaction) {
         if (transaction.getAccount() == null && transaction.getAccountId() != 0) {
@@ -81,6 +84,9 @@ public class TransactionServiceImpl implements ITransactionService {
         logger.info(">>> SOUE >>> : " + transaction.getClientMail());
         return transactionRepository.save(transaction);
     }
+    */
+
+    /*
 
     public void deleteTransactionById(Integer id) {
         transactionRepository.deleteById(id);
@@ -97,6 +103,9 @@ public class TransactionServiceImpl implements ITransactionService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.transactionRepository.findAll(pageable);
     }
+
+    */
+
 
     public Page<Transaction> findMyPaginatedTransactions(int pageNo, int pageSize, String sortField, String sortDirection) {
 

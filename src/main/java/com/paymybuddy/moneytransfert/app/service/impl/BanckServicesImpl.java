@@ -28,6 +28,7 @@ public class BanckServicesImpl implements IBanckServices {
     @Autowired
     TransactionRepository transactionRepository;
 
+    /*
     @Override
     public Account consult(int accountId) {
         Account account = accountRepository.findByAccountId(accountId);
@@ -36,6 +37,7 @@ public class BanckServicesImpl implements IBanckServices {
         }
         return account;
     }
+    */
 
     @Override
     public void verser(int accountId, int ammount, String labbel) {
@@ -123,10 +125,12 @@ public class BanckServicesImpl implements IBanckServices {
 
     }
 
+    /*
     @Override
     public Page<Transaction> listTransactions(int accountId, int page, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         return transactionRepository.listTransaction(accountId, PageRequest.of(page - 1, pageSize, sort));
     }
+    */
 }
