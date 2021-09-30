@@ -48,7 +48,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional
 	public User save(NewUser newUser) {
-		if (newUser.getPassword() != newUser.getMatchingPassword()) {
+		if (!newUser.getPassword().equals(newUser.getMatchingPassword())) {
 			throw new RuntimeException("La confirmation du mot de passe n'est pas identique");
 		}
 		User user = new User();

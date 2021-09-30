@@ -36,13 +36,13 @@ public class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
+/*	public User(String userName, String password, String firstName, String lastName, String email) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-	}
+	}*/
 
 	public User(String userName, String password, String firstName, String lastName, String email,
 			Collection<Role> roles) {
@@ -54,13 +54,13 @@ public class User {
 		this.roles = roles;
 	}
 
-	public Long getId() {
+/*	public Long getId() {
 		return id;
-	}
+	}*/
 
-	public void setId(Long id) {
+/*	public void setId(Long id) {
 		this.id = id;
-	}
+	}*/
 
 	public String getUserName() {
 		return userName;
