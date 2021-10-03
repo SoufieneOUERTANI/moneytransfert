@@ -41,7 +41,7 @@ public class NewUser {
 
 	public NewUser() {
 	}
-	/*
+
 	public void setUserName(String userName) { this.userName = userName;}
 	public void setPassword(String password) {
 		this.password = password;
@@ -57,7 +57,7 @@ public class NewUser {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}*/
+	}
 
 	public NewUser(String userName, String password, String matchingPassword, String firstName, String lastName, String email) {
 		this.userName = userName;
