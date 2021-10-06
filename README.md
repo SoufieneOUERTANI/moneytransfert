@@ -18,7 +18,7 @@
 <div itemprop="text" class="Box-body p-0 blob-wrapper data type-text  gist-border-0">
     <div class="text-center p-3">
           <span class="border-wrap">
-            <img src="./src/main/resources/static/images/README/ClassDiagramsEntity.png?raw=true" alt="ClassDiagramsEntity.png">
+            <img src="./src/main/resources/static/images/README/ClassDiagram.png?raw=true" alt="ClassDiagramsEntity.png">
           </span>
     </div>
 </div>
@@ -30,6 +30,18 @@
           <span class="border-wrap">
             <img src="./src/main/resources/static/images/README/MPD.png?raw=true" alt="MPD.png">
           </span>
+    </div>
+</div>
+
+
+
+<h3>Script d'initialisation de la base de données(MySql) :</h3>
+
+<div itemprop="text" class="Box-body p-0 blob-wrapper data type-text  gist-border-0">
+    <div class="text-center p-3">
+        <span class="border-wrap">
+            <a href=".\src\main\resources\static\sql\scripts\InitSchema&InjectSampleData.sql">InitSchema&InjectSampleData.sql</a>
+        </span>
     </div>
 </div>
 
@@ -49,7 +61,6 @@
 </lu>
 
 <h3>Lancement de l'application</h3>
-<b>Paramètres du fichier applciation.properties :</b><br>
 <p style="margin-left: 3em">
 <br><b> Ces paramètres doivent être renseignés pour la connexion à la base de données</b><br>
 spring.datasource.username=<br>

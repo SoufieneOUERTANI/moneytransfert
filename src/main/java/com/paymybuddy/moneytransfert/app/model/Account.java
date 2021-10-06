@@ -70,7 +70,7 @@ public class Account {
 	@Column(name="creation_date")
 	Date creationDate;
     
-    @Column(columnDefinition = "float default 0")
+    @Column(columnDefinition = "float default 0",scale = 2)
     float balance;
 
 	// To avoid infinite loop de @OneToMany => @ManyToOne => @OneToMany => ...

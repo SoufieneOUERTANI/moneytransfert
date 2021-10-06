@@ -75,7 +75,7 @@ class Transaction {
 	String clientMail;
 
 	//@Positive(message = "Transaction must be positive")
-	@Column(name="transaction_amount")
+	@Column(name="transaction_amount", scale = 2)
 	private float transactionAmount;
     
 //    @NotNull
